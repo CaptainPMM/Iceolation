@@ -1,6 +1,12 @@
 # LD54
-Ludum Dare 54 Game Jam.
+Ludum Dare 54 Game Jam
 
-## Von:
+# Contributors
 
-- Freddy
+Fynn
+
+[Timo](https://github.com/timo-eberl)
+
+[Freddy](https://www.youtube.com/watch?v=dQw4w9WgXcQ)
+
+Paul
