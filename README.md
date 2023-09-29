@@ -1,2 +1,6 @@
 # LD54
-Ludum Dare 54 Game Jam
+Ludum Dare 54 Game Jam.
+
+## Von:
+
+- Freddy
