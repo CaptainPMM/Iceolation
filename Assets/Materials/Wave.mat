@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-277193153095388785
+--- !u!114 &-588463694896139902
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
@@ -20,8 +20,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Ocean
-  m_Shader: {fileID: -6465566751694194690, guid: c3b0a278cb8ce39da8a7f97e03a78f96, type: 3}
+  m_Name: Wave
+  m_Shader: {fileID: -6465566751694194690, guid: 53c1f18865d26bfad92518feace82505, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -50,12 +50,9 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Number_Of_Waves: 5.11
-    - _Scroll_Speed: 3
-    - _Wave_Chaoticness: 0.132
-    - _Wave_Length: 0.418
-    - _Wave_Width: 0.479
+    - _Pixels: 70
+    - _Progress: 0
+    - _Wave_Width: 0.487
     m_Colors:
-    - _Background_Color: {r: 0, g: 0.03144642, b: 0.4245283, a: 0}
-    - _Wave_Color: {r: 0.10568706, g: 0.47824687, b: 0.8962264, a: 0}
+    - _Wave_Color: {r: 0.10588237, g: 0.47843134, b: 0.8980392, a: 0}
   m_BuildTextureStacks: []

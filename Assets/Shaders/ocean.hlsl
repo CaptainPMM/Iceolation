@@ -93,20 +93,36 @@ float perlinNoise(float2 position, int frequency, int octaveCount, float persist
     return value;
 }
 
+float4 get_shaded_waves(
+	float2 pixel_grid, float intensity, float3 wave_color
+) {
+	float checker_board = fmod(pixel_grid.x + pixel_grid.y,2);
+	float checker_board_2 = fmod(pixel_grid.x + pixel_grid.y,3);
+
+	if (intensity > 0.995) return float4(0.5, 0.5, 0.5, 1);
+	else if (intensity > 0.93) return float4(wave_color,1);
+	else if (intensity > 0.8 && checker_board_2) return float4(wave_color,1);
+	else if (intensity > 0.5 && checker_board) return float4(wave_color,1);
+	else if (intensity > 0.3 && !checker_board) return float4(wave_color*0.4,1);
+	else if (intensity > 0.1 && !checker_board_2) return float4(wave_color*0.4,1);
+	else return 0;
+}
+
 void ocean_float(
 	float2 screen_position, float time, float number_of_waves,
 	float wave_length, float wave_width, float wave_chaoticness,
 	float scroll_speed, float3 background_color, float3 wave_color,
-	out float3 out_color)
-{
+	out float3 out_color
+) {
 	float ratio = 16.0/9.0;
 	screen_position.x = 1 - screen_position.x;
 	screen_position.x *= ratio;
+    screen_position *= 2;
 	screen_position.x += + scroll_speed/number_of_waves * time;
-	screen_position *= 100;
+	screen_position *= 150;
 	screen_position = floor(screen_position);
 	float2 pixel_grid = screen_position;
-	screen_position /= 100;
+	screen_position /= 150;
 	float x = screen_position.x * number_of_waves;
 
 	uint seed = 0x578437adU;
@@ -128,7 +144,7 @@ void ocean_float(
 	float y = screen_position.y;
 	float wave_mask = (sin((y+perlin_noise_3*0.35)*number_vertical_waves * 2*PI) + o) / (1+o);
 	wave_mask = max(0,wave_mask);
-	float wave_offset = wave_mask * 0.4;
+	float wave_offset = wave_mask * 0.5;
 
 	float intensity = frac(x + wave_offset + perlin_noise_2*0.4 + perlin_noise*wave_chaoticness);
 	intensity = 1 - intensity;
@@ -140,25 +156,40 @@ void ocean_float(
 
 	out_color = intensity;
 	out_color.gb *= fmod(wave_id,2);
-	
-	float checker_board = fmod(pixel_grid.x + pixel_grid.y,2);
-	float checker_board_2 = fmod(pixel_grid.x + pixel_grid.y,3);
 
-	//if (intensity < 0.3) out_color = background_color;
-	//else if (intensity < 0.8 && checker_board_2) out_color = wave_color_2;
-	//else if (intensity < 0.9 && checker_board) out_color = wave_color;
-	//else if (intensity < 0.98) out_color = wave_color;
-	//else if (intensity < 1) out_color = 1;
-
-	if (intensity > 0.995) out_color = 0.5;
-	else if (intensity > 0.93) out_color = wave_color;
-	else if (intensity > 0.8 && checker_board_2) out_color = wave_color;
-	else if (intensity > 0.5 && checker_board) out_color = wave_color;
-	else if (intensity > 0.3 && !checker_board) out_color = wave_color * 0.4;
-	else if (intensity > 0.1 && !checker_board_2) out_color = wave_color * 0.4;
-	else if (perlin_noise_4 > 0.5) out_color = background_color * 0.4;
-	else if (perlin_noise_4 > 0) out_color = background_color * 0.6;
+	if (perlin_noise_4 > 0.5) out_color = background_color*0.4;
+	else if (perlin_noise_4 > 0) out_color = background_color*0.6;
 	else out_color = background_color;
 
-	//out_color = perlin_noise_4;
+	float4 shading = get_shaded_waves(pixel_grid, intensity, wave_color);
+
+	out_color = lerp(out_color, shading, shading.a);
+}
+
+void wave_float(
+	float2 uv, float progress, float wave_width, float pixels, float3 wave_color,
+	out float3 out_color, out float out_alpha
+) {
+	uv *= pixels;
+	uv = round(uv);
+	float2 pixel_grid = uv;
+	uv /= pixels;
+
+	uint seed = 0x578437adU;
+	float perlin_noise = perlinNoise(uv, 3, 3, 0.5, 2.0, seed) * 0.5 + 0.5;
+
+	uv -= 0.5;
+
+	float2 direction = float2(0,0) - uv;
+	float distance = length(direction) * 2 + perlin_noise * 0.25;
+
+	float wave_distance = distance - progress;
+	float wave = smoothstep(-wave_width, 0, wave_distance);
+	if (wave >= 1) wave = 0;
+
+	wave *= smoothstep(1, 0.75, progress);
+	float4 wave_shading = get_shaded_waves(pixel_grid, wave, wave_color);
+
+	out_color = wave_shading.rgb;
+	out_alpha = wave_shading.a;
 }
