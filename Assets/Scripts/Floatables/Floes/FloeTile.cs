@@ -1,3 +1,4 @@
+using LD54.Game;
 using UnityEngine;
 
 namespace LD54.Floatables.Floes
@@ -26,7 +27,9 @@ namespace LD54.Floatables.Floes
 
         private void Update()
         {
-            transform.position = new Vector3(transform.position.x - (FloatSpeed * Time.deltaTime), transform.position.y, transform.position.z);
+            transform.position = new Vector3(transform.position.x - 
+                (FloatSpeed * Time.deltaTime * GameManager.Instance.ProgressSpeed), 
+                transform.position.y, transform.position.z);
         }
 
 #if UNITY_EDITOR
