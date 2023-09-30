@@ -38,6 +38,15 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Ocean
+    uniqueID: 4241535301
+    locked: 0
+  - name: Floatables
+    uniqueID: 3744399833
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Player
+    uniqueID: 3805299789
     locked: 0
