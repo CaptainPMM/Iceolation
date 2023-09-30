@@ -26,13 +26,13 @@ namespace LD54.Player {
             // UP
             if(Input.GetKey(moveUp)) {
                 moveInput.y = 1;
-
                 isDirty = true;
             }
 
             // DOWN
             if (Input.GetKey(moveDown)) {
                 moveInput.y = -1;
+                isDirty = true;
             }
 
             // LEFT
@@ -45,7 +45,6 @@ namespace LD54.Player {
             // RIGHT
             if (Input.GetKey(moveRight)) {
                 moveInput.x = 1;
-
                 isDirty = true;
             }
 
