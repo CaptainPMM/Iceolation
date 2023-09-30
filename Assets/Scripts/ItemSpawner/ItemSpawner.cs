@@ -35,6 +35,7 @@ namespace LD54.ItemGenerator {
                 yield return WaitBetweenSpawn();
             }
         }
+
         private IEnumerator WaitBetweenSpawn() {
             yield return new WaitForSeconds(Random.Range(minTimeBetweenSpawns, maxTimeBetweenSpawns) / GameManager.Instance.ProgressSpeed);
         }

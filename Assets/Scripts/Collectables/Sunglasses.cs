@@ -1,8 +1,8 @@
 using LD54.Game;
 using UnityEngine;
 
-namespace LD54.Obstacles {
-    public class Iceberg : MonoBehaviour {
+namespace LD54.Collectables {
+    public class Sunglasses : MonoBehaviour {
         [field: Header("Settings")]
         [field: SerializeField] public float MoveSpeed { get; private set; } = 1f; // negative values move to the right
 
