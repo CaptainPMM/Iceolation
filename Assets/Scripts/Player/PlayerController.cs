@@ -44,19 +44,5 @@ namespace LD54.Player {
         public void SetPlayerSunglasses(bool visible) {
             animController.SetBool("hasSunglasses", visible);
         }
-
-        private void FixedUpdate() {
-          /*
-            Vector2 targetSpeed = moveInput * maxVelocity;
-            Vector2 speedDif = targetSpeed - rbController.velocity;
-
-            float accelerationRate = (targetSpeed.magnitude > 0.01f) ? acceleration : deceleration;
-
-            float movementX = Mathf.Pow(Mathf.Abs(speedDif.x) * accelerationRate, velocityPower) * Mathf.Sign(speedDif.x);
-            float movementY = Mathf.Pow(Mathf.Abs(speedDif.y) * accelerationRate, velocityPower) * Mathf.Sign(speedDif.y);
-
-            rbController.AddForce(new Vector2(movementX, movementY));
-          */
-        }
     }
 }
