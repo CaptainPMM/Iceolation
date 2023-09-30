@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Floatables
+namespace LD54.Floatables
 {
     public abstract class Floatable : MonoBehaviour
     {

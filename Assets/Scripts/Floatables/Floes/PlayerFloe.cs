@@ -1,8 +1,7 @@
 using System.Collections;
-using System.Threading.Tasks;
 using UnityEngine;
 
-namespace Floatables.Floes
+namespace LD54.Floatables.Floes
 {
     public class PlayerFloe : Floatable
     {

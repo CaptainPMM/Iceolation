@@ -1,4 +1,4 @@
-namespace Floatables
+namespace LD54.Floatables
 {
     public enum FloatableType : byte
     {

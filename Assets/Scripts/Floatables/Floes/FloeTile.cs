@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Floatables.Floes
+namespace LD54.Floatables.Floes
 {
     public class FloeTile : Floatable
     {
