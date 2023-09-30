@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 1a3badd81c38311408d1c68299f8ab1f
+guid: 9a00d685dcff93c4e9caf22c23108109
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7677859485772799188
-    second: SunglassesPink_0
+      213: 7417498029127908629
+    second: 002_0
   externalObjects: {}
   serializedVersion: 12
   mipmaps:
@@ -122,13 +122,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: SunglassesPink_0
+      name: 002_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 142
-        height: 32
+        x: 49
+        y: 14
+        width: 102
+        height: 147
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -136,8 +136,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c23262b0a73c27590800000000000000
-      internalID: -7677859485772799188
+      spriteID: 51d345c682f30f660800000000000000
+      internalID: 7417498029127908629
       vertices: []
       indices: 
       edges: []
@@ -153,7 +153,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      SunglassesPink_0: -7677859485772799188
+      002_0: 7417498029127908629
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

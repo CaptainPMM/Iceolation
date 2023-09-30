@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 1a3badd81c38311408d1c68299f8ab1f
+guid: c12aef942fbb5a04e988fc6af573d48b
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7677859485772799188
-    second: SunglassesPink_0
+      213: 6910551291950644271
+    second: FloeTile bottom part_0
   externalObjects: {}
   serializedVersion: 12
   mipmaps:
@@ -106,29 +106,17 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: Windows Store Apps
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: SunglassesPink_0
+      name: FloeTile bottom part_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 142
-        height: 32
+        x: 49
+        y: 14
+        width: 102
+        height: 52
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -136,8 +124,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c23262b0a73c27590800000000000000
-      internalID: -7677859485772799188
+      spriteID: f2cb5de49c537ef50800000000000000
+      internalID: 6910551291950644271
       vertices: []
       indices: 
       edges: []
@@ -153,7 +141,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      SunglassesPink_0: -7677859485772799188
+      FloeTile bottom part_0: 6910551291950644271
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

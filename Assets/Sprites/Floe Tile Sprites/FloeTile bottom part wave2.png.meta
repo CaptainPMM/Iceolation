@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 412ca72472353fd4db23fd61e8e2411b
+guid: fdec543cfbe417c4b8f896842faf8a80
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -1483407423975865499
-    second: 000_0
+      213: -5501382517664565329
+    second: FloeTile bottom part wave2_0
   externalObjects: {}
   serializedVersion: 12
   mipmaps:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -46,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -106,29 +106,17 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: Windows Store Apps
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: 000_0
+      name: FloeTile bottom part wave2_0
       rect:
         serializedVersion: 2
         x: 49
-        y: 14
+        y: 19
         width: 102
-        height: 152
+        height: 52
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -136,8 +124,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 563cdbcaec0e96be0800000000000000
-      internalID: -1483407423975865499
+      spriteID: fa73f0d6fb927a3b0800000000000000
+      internalID: -5501382517664565329
       vertices: []
       indices: 
       edges: []
@@ -145,7 +133,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -153,7 +141,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      000_0: -1483407423975865499
+      FloeTile bottom part wave2_0: -5501382517664565329
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
