@@ -30,7 +30,8 @@ namespace LD54.ItemGenerator {
         }
 
         private IEnumerator SpawnObjects() {
-            while(isRunning) {
+            yield return null;
+            while(GameManager.Instance.IsRunning) {
                 SpawnObject();
                 yield return WaitBetweenSpawn();
             }

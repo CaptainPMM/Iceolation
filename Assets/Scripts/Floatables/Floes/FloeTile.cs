@@ -30,6 +30,11 @@ namespace LD54.Floatables.Floes
             transform.position = new Vector3(transform.position.x - 
                 (FloatSpeed * Time.deltaTime * GameManager.Instance.ProgressSpeed), 
                 transform.position.y, transform.position.z);
+
+            if (transform.position.x < -15) 
+            {
+                Destroy(gameObject);
+            }
         }
 
 #if UNITY_EDITOR
