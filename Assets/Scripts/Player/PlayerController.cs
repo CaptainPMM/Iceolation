@@ -26,8 +26,7 @@ namespace LD54.Player {
         public bool PlayerSunglassesVisible
         {
             get => _playerSunglassesVisible;
-            set
-            {
+            set {
                 _playerSunglassesVisible = value;
                 animController.SetFloat("hasSunglasses", value ? 1.0f : 0.0f);
             }
@@ -53,7 +52,6 @@ namespace LD54.Player {
             if (rbController.velocity.magnitude < maxVelocity)
                 rbController.AddForce(rawInput * acceleration * 200f * Time.deltaTime);     // 200f = factor, so acceleration doesn't need to be 1000 but can be 5 instead
             */
-
 
             moveDelta = new Vector3(moveInput.x, moveInput.y, 0).normalized * acceleration * Time.deltaTime;
             transform.localPosition += moveDelta;
