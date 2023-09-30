@@ -9,6 +9,7 @@ namespace LD54.Floatables.Floes
 
         [field: Header("Settings")]
         [field: SerializeField] public float FloatSpeed { get; private set; } = 1f; // negative values float to the right
+        [SerializeField] private float _floatingScaleFactor = 0.9f;
 
         [Header("State")]
         [SerializeField] private bool _isFloating;
@@ -20,18 +21,26 @@ namespace LD54.Floatables.Floes
             {
                 _isFloating = value;
                 enabled = _isFloating;
-                if (_isFloating) _col.compositeOperation = Collider2D.CompositeOperation.None;
-                else _col.compositeOperation = Collider2D.CompositeOperation.Merge;
+                if (_isFloating)
+                {
+                    transform.localScale = Vector3.one * _floatingScaleFactor;
+                    _col.compositeOperation = Collider2D.CompositeOperation.None;
+                }
+                else
+                {
+                    transform.localScale = Vector3.one;
+                    _col.compositeOperation = Collider2D.CompositeOperation.Merge;
+                }
             }
         }
 
         private void Update()
         {
-            transform.position = new Vector3(transform.position.x - 
-                (FloatSpeed * Time.deltaTime * GameManager.Instance.ProgressSpeed), 
+            transform.position = new Vector3(transform.position.x -
+                (FloatSpeed * Time.deltaTime * GameManager.Instance.ProgressSpeed),
                 transform.position.y, transform.position.z);
 
-            if (transform.position.x < -15) 
+            if (transform.position.x < -15)
             {
                 Destroy(gameObject);
             }
