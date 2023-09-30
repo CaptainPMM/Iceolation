@@ -15,6 +15,8 @@ namespace LD54.Player {
         [SerializeField]
         private float velocityPower = 2f;
 
+        [field: SerializeField] public float Weight { get; private set; } = 1f;
+
         private Rigidbody2D rbController;
         private Animator animController;
         private Vector2 moveInput;
