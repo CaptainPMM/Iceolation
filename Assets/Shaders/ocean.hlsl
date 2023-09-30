@@ -105,6 +105,7 @@ void ocean_float(
 	screen_position.x += + scroll_speed/number_of_waves * time;
 	screen_position *= 100;
 	screen_position = floor(screen_position);
+	float2 pixel_grid = screen_position;
 	screen_position /= 100;
 	float x = screen_position.x * number_of_waves;
 
@@ -117,16 +118,19 @@ void ocean_float(
 	float perlin_noise_3 = perlinNoise(noise_coord*0.6, seed);
 	noise_coord.x += time * 0.2;
 	float perlin_noise_2 = perlinNoise(noise_coord*0.4, seed);
+	noise_coord.x += time * scroll_speed / 5;
+	noise_coord.x /= 10;
+	float perlin_noise_4 = perlinNoise(noise_coord, 4, 3, 0.5, 2.0, seed);
 	
 	float wave_distance = 0.1;
 	float o = 1 - wave_distance;
 	float number_vertical_waves = 1/wave_width;
 	float y = screen_position.y;
-	float wave_mask = (sin((y+perlin_noise_3*0.07)*number_vertical_waves * 2*PI) + o) / (1+o);
+	float wave_mask = (sin((y+perlin_noise_3*0.35)*number_vertical_waves * 2*PI) + o) / (1+o);
 	wave_mask = max(0,wave_mask);
-	float wave_offset = wave_mask * 0.3;
+	float wave_offset = wave_mask * 0.4;
 
-	float intensity = frac(x + wave_offset + perlin_noise_2*0.5 + perlin_noise*wave_chaoticness);
+	float intensity = frac(x + wave_offset + perlin_noise_2*0.4 + perlin_noise*wave_chaoticness);
 	intensity = 1 - intensity;
 	float wave_id = ceil(x + wave_offset + perlin_noise*wave_chaoticness);
 
@@ -136,7 +140,25 @@ void ocean_float(
 
 	out_color = intensity;
 	out_color.gb *= fmod(wave_id,2);
+	
+	float checker_board = fmod(pixel_grid.x + pixel_grid.y,2);
+	float checker_board_2 = fmod(pixel_grid.x + pixel_grid.y,3);
 
-	out_color = lerp(background_color, wave_color, intensity);
-	out_color = lerp(out_color, 1, smoothstep(0.9,1,intensity));
+	//if (intensity < 0.3) out_color = background_color;
+	//else if (intensity < 0.8 && checker_board_2) out_color = wave_color_2;
+	//else if (intensity < 0.9 && checker_board) out_color = wave_color;
+	//else if (intensity < 0.98) out_color = wave_color;
+	//else if (intensity < 1) out_color = 1;
+
+	if (intensity > 0.995) out_color = 0.5;
+	else if (intensity > 0.93) out_color = wave_color;
+	else if (intensity > 0.8 && checker_board_2) out_color = wave_color;
+	else if (intensity > 0.5 && checker_board) out_color = wave_color;
+	else if (intensity > 0.3 && !checker_board) out_color = wave_color * 0.4;
+	else if (intensity > 0.1 && !checker_board_2) out_color = wave_color * 0.4;
+	else if (perlin_noise_4 > 0.5) out_color = background_color * 0.4;
+	else if (perlin_noise_4 > 0) out_color = background_color * 0.6;
+	else out_color = background_color;
+
+	//out_color = perlin_noise_4;
 }
