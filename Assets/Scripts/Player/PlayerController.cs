@@ -19,6 +19,18 @@ namespace LD54.Player {
         private Animator animController;
         private Vector2 moveInput;
 
+        private bool _playerSunglassesVisible;
+
+        public bool PlayerSunglassesVisible
+        {
+            get => _playerSunglassesVisible;
+            set
+            {
+                _playerSunglassesVisible = value;
+                animController.SetBool("hasSunglasses", _playerSunglassesVisible);
+            }
+        }
+
         private void OnEnable() {
 
             rbController = GetComponent<Rigidbody2D>();
@@ -39,10 +51,6 @@ namespace LD54.Player {
             if (rbController.velocity.magnitude < maxVelocity)
                 rbController.AddForce(rawInput * acceleration * 200f * Time.deltaTime);     // 200f = factor, so acceleration doesn't need to be 1000 but can be 5 instead
             
-        }
-
-        public void SetPlayerSunglasses(bool visible) {
-            animController.SetBool("hasSunglasses", visible);
         }
     }
 }
