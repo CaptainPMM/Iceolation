@@ -174,8 +174,5 @@ MonoBehaviour:
   acceleration: 3
   deceleration: 0.8
   maxVelocity: 3.45
-<<<<<<< HEAD
-=======
   velocityPower: 2
->>>>>>> c7a17e60b37ded9814d16cc20163ec344be159a1
   <Weight>k__BackingField: 1
