@@ -57,5 +57,3 @@ namespace LD54.Camera {
         }
     }
 }
-
-
