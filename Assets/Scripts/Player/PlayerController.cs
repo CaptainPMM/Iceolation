@@ -29,7 +29,7 @@ namespace LD54.Player {
             set
             {
                 _playerSunglassesVisible = value;
-                animController.SetBool("hasSunglasses", _playerSunglassesVisible);
+                animController.SetFloat("hasSunglasses", value ? 1.0f : 0.0f);
             }
         }
 
