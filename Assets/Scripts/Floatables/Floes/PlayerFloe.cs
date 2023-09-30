@@ -5,8 +5,9 @@ namespace LD54.Floatables.Floes
 {
     public class PlayerFloe : Floatable
     {
-        [SerializeField] private Transform _tilesParent;
         [SerializeField] private CompositeCollider2D _col;
+        [SerializeField] private Transform _steeringAxis;
+        [SerializeField] private Transform _tilesParent;
 
         [Header("State")]
         [SerializeField] private Vector2 _cg; // center of gravity in local space
@@ -31,6 +32,9 @@ namespace LD54.Floatables.Floes
                 summedPositions += col.transform.parent.localPosition;
             }
             _cg = summedPositions / cols.Length; // every tile has the same weight - otherwise multiply postions with weight and divide by total weight
+
+            _steeringAxis.transform.localPosition = new Vector3(transform.InverseTransformPoint(_col.bounds.center).x, _cg.y, 0f);
+            _steeringAxis.transform.localScale = new Vector3(_col.bounds.extents.x * 2f, _steeringAxis.localScale.y, 1f);
         }
 
         private void OnTriggerEnter2D(Collider2D other)
