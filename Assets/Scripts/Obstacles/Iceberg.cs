@@ -2,17 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Rock : MonoBehaviour
+public class Iceberg : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [field: Header("Settings")]
+    [field: SerializeField] public float MoveSpeed { get; private set; } = 1f; // negative values move to the right
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+        transform.position = new Vector3(transform.position.x - (MoveSpeed * Time.deltaTime), transform.position.y, transform.position.z);
     }
 }
