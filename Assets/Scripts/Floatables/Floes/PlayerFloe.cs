@@ -69,7 +69,8 @@ namespace LD54.Floatables.Floes
 
             IEnumerator DelayedGeoUpdate()
             {
-                yield return new WaitForSeconds(0.1f);
+                yield return new WaitForFixedUpdate();
+                yield return new WaitForFixedUpdate();
                 _col.GenerateGeometry(); // this method needs some delay...
                 CalcCG();
             }
