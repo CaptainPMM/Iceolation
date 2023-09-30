@@ -5,7 +5,7 @@ namespace LD54.Floatables
         None,
         PlayerFloe,
         Floe,
-        Iceberg,
+        Obstacle,
         Item
     }
 }

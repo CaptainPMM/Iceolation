@@ -41,9 +41,6 @@ TagManager:
   - name: Ocean
     uniqueID: 4241535301
     locked: 0
-  - name: FloeTile bottom
-    uniqueID: 779776911
-    locked: 0
   - name: Floatables
     uniqueID: 3744399833
     locked: 0

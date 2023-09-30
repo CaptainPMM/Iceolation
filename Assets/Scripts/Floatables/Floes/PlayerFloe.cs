@@ -63,11 +63,8 @@ namespace LD54.Floatables.Floes
                     AttachFloe(floatable as FloeTile);
                     break;
                 case FloatableType.Item:
-                    if(!_player.PlayerSunglassesVisible)
-                    {
-                        Destroy(other.gameObject);
-                        _player.PlayerSunglassesVisible = true;
-                    }
+                    if (!_player.PlayerSunglassesVisible) _player.PlayerSunglassesVisible = true;
+                    Destroy(other.gameObject);
                     break;
             }
         }

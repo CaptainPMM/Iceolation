@@ -1,5 +1,5 @@
-using LD54.Game;
 using UnityEngine;
+using LD54.Game;
 
 namespace LD54.Floatables.Floes
 {
@@ -40,7 +40,7 @@ namespace LD54.Floatables.Floes
                 (FloatSpeed * Time.deltaTime * GameManager.Instance.ProgressSpeed),
                 transform.position.y, transform.position.z);
 
-            if (transform.position.x < -15)
+            if (transform.position.x < GameManager.Instance.GameViewBoundsLeft)
             {
                 Destroy(gameObject);
             }

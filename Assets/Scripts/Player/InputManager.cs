@@ -1,9 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace LD54.Player {
-
+namespace LD54.Player
+{
     public class InputManager : MonoBehaviour
     {
         public delegate void OnMoveInput(Vector2 movement);
@@ -18,39 +16,43 @@ namespace LD54.Player {
 
         public Vector2 moveInput;
 
-
-        void Update() {
-
-            moveInput = new Vector2(0,0);
+        void Update()
+        {
+            moveInput = new Vector2(0, 0);
 
             // UP
-            if(Input.GetKey(moveUp)) {
+            if (Input.GetKey(moveUp))
+            {
                 moveInput.y = 1;
                 isDirty = true;
             }
 
             // DOWN
-            if (Input.GetKey(moveDown)) {
+            if (Input.GetKey(moveDown))
+            {
                 moveInput.y = -1;
                 isDirty = true;
             }
 
             // LEFT
-            if (Input.GetKey(moveLeft)) {
+            if (Input.GetKey(moveLeft))
+            {
                 moveInput.x = -1;
 
                 isDirty = true;
             }
 
             // RIGHT
-            if (Input.GetKey(moveRight)) {
+            if (Input.GetKey(moveRight))
+            {
                 moveInput.x = 1;
                 isDirty = true;
             }
 
-            if (moveInput.magnitude != 0 || isDirty) {
+            if (moveInput.magnitude != 0 || isDirty)
+            {
                 onMoveInput?.Invoke(moveInput);
-                if(moveInput.magnitude == 0)
+                if (moveInput.magnitude == 0)
                     isDirty = false;
             }
         }

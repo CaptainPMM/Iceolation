@@ -1,10 +1,10 @@
 using System.Collections;
 using UnityEngine;
 
-namespace LD54.Camera {
+namespace LD54.Camera
+{
     public class CameraAspectFitter : MonoBehaviour
     {
-
         [SerializeField]
         private Vector2 referenceRatio = new Vector2(16, 9);
 
@@ -52,8 +52,6 @@ namespace LD54.Camera {
 
                 yield return new WaitForEndOfFrame();
             }
-
-            
         }
     }
 }
