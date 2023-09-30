@@ -6,20 +6,20 @@ namespace LD54.Player {
         [SerializeField]
         private float acceleration = 15f;
 
-        [SerializeField]
+       /* [SerializeField]
         private float deceleration = 20f;
+       */
 
         [SerializeField]
         private float maxVelocity = 4;
 
-        [SerializeField]
-        private float velocityPower = 2f;
-
         [field: SerializeField] public float Weight { get; private set; } = 1f;
 
-        private Rigidbody2D rbController;
+
         private Animator animController;
         private Vector2 moveInput;
+
+        private Vector3 moveDelta;
 
         private bool _playerSunglassesVisible;
 
@@ -34,8 +34,6 @@ namespace LD54.Player {
         }
 
         private void OnEnable() {
-
-            rbController = GetComponent<Rigidbody2D>();
             animController = GetComponent<Animator>();
             InputManager.onMoveInput += OnMove;
         }
@@ -50,9 +48,15 @@ namespace LD54.Player {
             animController.SetFloat("moveX", moveInput.x);
             animController.SetFloat("moveY", moveInput.y);
 
+            /*
+
             if (rbController.velocity.magnitude < maxVelocity)
                 rbController.AddForce(rawInput * acceleration * 200f * Time.deltaTime);     // 200f = factor, so acceleration doesn't need to be 1000 but can be 5 instead
-            
+            */
+
+
+            moveDelta = new Vector3(moveInput.x, moveInput.y, 0).normalized * acceleration * Time.deltaTime;
+            transform.localPosition += moveDelta;
         }
     }
 }

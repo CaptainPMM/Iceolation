@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 121125180610999127}
   - component: {fileID: 2406269373188654482}
   - component: {fileID: 362286902286608184}
-  - component: {fileID: 2466819816549274893}
   - component: {fileID: 518583526217587215}
   - component: {fileID: 1709869746917748881}
   - component: {fileID: 4666484803528450588}
@@ -125,33 +124,6 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.5
---- !u!50 &2466819816549274893
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4029217623339156580}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 9
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!95 &518583526217587215
 Animator:
   serializedVersion: 7
@@ -199,7 +171,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ed43b42799c59041b7b841f899e5f89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  acceleration: 15
-  deceleration: 20
+  acceleration: 3
+  deceleration: 0.8
   maxVelocity: 3.45
-  velocityPower: 2
+  <Weight>k__BackingField: 1
