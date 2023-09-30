@@ -4,7 +4,7 @@ namespace LD54.Player {
     public class PlayerController : MonoBehaviour {
 
         [SerializeField]
-        private float accelerateSpeed = 4;
+        private float acceleration = 15f;
 
         [SerializeField]
         private float maxVelocity = 4;
@@ -24,7 +24,7 @@ namespace LD54.Player {
         private void OnMove(Vector2 rawInput) {
 
             if(rbController.velocity.magnitude < maxVelocity)
-                rbController.AddForce(rawInput * accelerateSpeed * 200f * Time.deltaTime);
+                rbController.AddForce(rawInput * acceleration * 200f * Time.deltaTime);
         }
     }
 }
