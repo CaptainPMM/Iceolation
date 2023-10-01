@@ -7,7 +7,8 @@ namespace LD54.Game
     {
         public static GameManager Instance { get; private set; }
 
-        [field: SerializeField] public float GameViewBoundsLeft { get; private set; } = -15f;
+        [field: SerializeField] public Vector2 GameViewBounds { get; private set; } = new(15f, 5f);
+
         [field: SerializeField] public float ProgressSpeed { get; private set; } = 1f;
 
         public bool IsRunning { get; private set; } = false;

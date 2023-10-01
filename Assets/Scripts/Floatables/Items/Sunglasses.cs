@@ -14,7 +14,7 @@ namespace LD54.Floatables.Items
                 (MoveSpeed * Time.deltaTime * GameManager.Instance.ProgressSpeed),
                 transform.position.y, transform.position.z);
 
-            if (transform.position.x < GameManager.Instance.GameViewBoundsLeft)
+            if (transform.position.x < -GameManager.Instance.GameViewBounds.x)
             {
                 Destroy(gameObject);
             }
