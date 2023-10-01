@@ -53,6 +53,23 @@ namespace LD54.Floatables.Floes
             // Move result
             transform.position += movement;
             _player.transform.position += movement;
+
+            // spawn some waves on the side the floe is "tilted"
+            // playerSteeringMoment (down,up) [-1;1]
+            foreach (Transform tile in _tilesParent)
+            {
+                float cgDirection = tile.localPosition.y - _cg.y;
+
+                if (cgDirection * playerSteeringMoment < 0.0f) continue; // skip tiles at wrong side of floe
+
+                // the more the floe is tilted the higher the probability of a wave
+                float waveProbabilityPerFloe = Mathf.Abs(playerSteeringMoment) * Mathf.Abs(cgDirection) * Time.deltaTime;
+                if (Random.Range(0.0f, 1.0f) < waveProbabilityPerFloe)
+                {
+                    Vector3 posOffset = new Vector3(0.0f, -0.25f, 0.0f);
+                    GameManager.Instance.Ocean.CreateWave(tile.position + posOffset, 0.6f, 4.0f, 1.5f);
+                }
+            }
         }
 
         [ContextMenu("Calculate CG")]

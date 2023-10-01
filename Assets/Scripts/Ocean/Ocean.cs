@@ -62,8 +62,8 @@ namespace LD54.Ocean
                 wave.waveInstance.GetComponent<SpriteRenderer>().material
                     .SetFloat("_Progress", wave.progress);
                 Vector3 position = wave.waveInstance.transform.position;
-                // looks better if the wave moves only with half the water speed
-                // position.x += Time.deltaTime * WaterSpeed * 0.5f; // actually looks better if the wave does not move
+                // looks better if the wave moves only with a fraction of the water speed
+                position.x += Time.deltaTime * WaterSpeed * 0.5f;
                 wave.waveInstance.transform.position = position;
                 if (wave.progress > 1.0f) Destroy(wave.waveInstance);
             }
