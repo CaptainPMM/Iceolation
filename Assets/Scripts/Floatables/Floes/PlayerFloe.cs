@@ -16,6 +16,7 @@ namespace LD54.Floatables.Floes
         [Header("Settings")]
         [SerializeField] private Vector2 _moveSpeed = new(1f, 1f);
         [SerializeField] private float _steeringAxisYDeadzone = 0.5f;
+        [SerializeField, Min(0f)] private float _obstacleImpactFactor = 0.03f;
 
         [Header("State")]
         [SerializeField] private Vector2 _cg; // center of gravity in local space
@@ -133,12 +134,13 @@ namespace LD54.Floatables.Floes
         private void CollideObstacle(Iceberg iceberg)
         {
             // Convert hitpoint to local space
-            SnapToGrid(_col.ClosestPoint(iceberg.transform.position), out _, out Vector2 localCoords, iceberg.MoveSpeed);          
+            SnapToGrid(_col.ClosestPoint(iceberg.transform.position), out _, out Vector2 localCoords, iceberg.MoveSpeed);
 
             // Impact
             float impact = iceberg.Weight * _tilesParent.childCount * GameManager.Instance.ProgressSpeed;
-  
-            DestroyInRadius(localCoords, 3);
+
+            DestroyInRadius(localCoords, 2 + Mathf.RoundToInt(impact * _obstacleImpactFactor));
+
             StartCoroutine(DelayedGeoUpdate());
 
 
@@ -176,6 +178,7 @@ namespace LD54.Floatables.Floes
 
         private void DestroyInRadius(Vector2 _normalizedHitPosition, int _radius)
         {
+            int childCount = _tilesParent.childCount;
             // Traverse the square created by the radius in both x- and y- direction
             for (int x = -_radius; x < _radius; x++)                                    // Change here to make hemisphere
             {
@@ -190,18 +193,28 @@ namespace LD54.Floatables.Floes
 
                         // Destroy tile if it exists
                         if (tile)
+                        {
                             Destroy(tile);
+                            childCount--;
+                        }
                     }
                 }
+            }
+
+            if (childCount <= 0)
+            {
+                //Loose condition
+                GameManager.Instance.EndGame(false);
+                Destroy(gameObject);
             }
         }
 
         // Try to find tile in position x,y
         private Transform FindTile(int tileCoordX, int tileCoordY)
         {
-            foreach(Transform tile in _tilesParent)
+            foreach (Transform tile in _tilesParent)
             {
-                if(tile.localPosition.x == tileCoordX 
+                if (tile.localPosition.x == tileCoordX
                     && tile.localPosition.y == tileCoordY)
                 {
                     return tile;
