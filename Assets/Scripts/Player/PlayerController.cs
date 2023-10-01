@@ -8,6 +8,7 @@ namespace LD54.Player
         [SerializeField]
         private Rigidbody2D _rb;
         public Rigidbody2D RB => _rb;
+        public Vector2 MoveInput { get { return moveInput; } }
 
         [SerializeField]
         private CircleCollider2D _col;
