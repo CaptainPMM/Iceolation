@@ -6,13 +6,13 @@ namespace LD54.Ocean
     [RequireComponent(typeof(SpriteRenderer))]
     public class Ocean : MonoBehaviour
     {
-        public float WaterSpeed = 1.5f;
+        public float WaterSpeed = 3.0f;
         public GameObject WavePrefab;
 
         [ContextMenu("Create Wave")]
         public void CreateWave()
         {
-            CreateWave(new Vector2(2.0f, 2.0f));
+            CreateWave(new Vector2(2.0f, 2.0f), 10.0f, 3.0f);
         }
 
         public void CreateWave(Vector2 worldPosition, float radius = 2.0f, float duration = 1.0f)
@@ -24,9 +24,9 @@ namespace LD54.Ocean
             wave.waveInstance.transform.position = worldPosition;
             wave.waveInstance.transform.localScale = new Vector3(radius, radius, 1.0f);
             wave.waveInstance.GetComponent<SpriteRenderer>().material
-                .SetFloat("_Pixels", radius * 30.0f); // one "pixel" is 30 pixels big
+                .SetFloat("_Pixels", radius * 15.0f); // one "pixel" is 15 pixels big
             wave.waveInstance.GetComponent<SpriteRenderer>().material
-                .SetFloat("_Wave_Width", 1.0f / radius);
+                .SetFloat("_Wave_Width", 1.5f / radius);
             wave.waveInstance.transform.parent = this.transform;
             waveData.Add(wave);
         }
@@ -50,6 +50,10 @@ namespace LD54.Ocean
                 wave.progress += Time.deltaTime / wave.duration;
                 wave.waveInstance.GetComponent<SpriteRenderer>().material
                     .SetFloat("_Progress", wave.progress);
+                Vector3 position = wave.waveInstance.transform.position;
+                // looks better if the wave moves only with half the water speed
+                position.x += Time.deltaTime * WaterSpeed * 0.5f;
+                wave.waveInstance.transform.position = position;
                 if (wave.progress > 1.0f) Destroy(wave.waveInstance);
             }
             waveData.RemoveAll(wave => wave.progress > 1.0f);
@@ -57,7 +61,7 @@ namespace LD54.Ocean
 
         private void OnValidate()
         {
-            float shaderWaterSpeed = WaterSpeed * 2f;
+            float shaderWaterSpeed = WaterSpeed * 0.5f;
             oceanMaterial.SetFloat("_Scroll_Speed", shaderWaterSpeed);
         }
 
