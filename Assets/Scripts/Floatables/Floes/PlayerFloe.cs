@@ -122,45 +122,24 @@ namespace LD54.Floatables.Floes
             floe.IsFloating = false;
             floe.transform.SetParent(_tilesParent);
 
-            float halfTileSize = floe.transform.localScale.x * 0.5f;
-            float sign = Mathf.Sign(floe.FloatSpeed); // floating left -> positive sign, floating right -> negative sign
-            Vector2 hitPos = transform.InverseTransformPoint(_col.ClosestPoint(floe.transform.position)); // needed later
-
-            floe.transform.localPosition = new Vector3(Mathf.RoundToInt(hitPos.x + halfTileSize * sign), Mathf.RoundToInt(hitPos.y), 0f);
-
-            // Check for wrong placement
-            RaycastHit2D rayHitHoriz = Physics2D.Raycast(floe.transform.position, Vector2.left * sign, floe.transform.localScale.x);
-            if (!rayHitHoriz.collider)
-            {
-                Vector2 rayHitVertDir = floe.transform.localPosition.y <= hitPos.y ? Vector2.up : Vector2.down;
-                RaycastHit2D rayHitVert = Physics2D.Raycast(floe.transform.position, rayHitVertDir, floe.transform.localScale.x);
-                if (!rayHitVert.collider) floe.transform.localPosition = new Vector3(floe.transform.localPosition.x - floe.transform.localScale.x * sign, floe.transform.localPosition.y, 0f);
-            }
+            SnapToGrid(_col.ClosestPoint(floe.transform.position), out _, out Vector2 localCoords, floe.FloatSpeed);
+            floe.transform.localPosition = localCoords;
 
             GameManager.Instance.Ocean.CreateWave(floe.transform.position, 0.5f, 3.5f, 1.5f);
 
             StartCoroutine(DelayedGeoUpdate());
-
-            IEnumerator DelayedGeoUpdate()
-            {
-                yield return new WaitForFixedUpdate();
-                yield return new WaitForFixedUpdate();
-                _col.GenerateGeometry(); // this method needs some delay...
-                CalcCG();
-            }
         }
 
         private void CollideObstacle(Iceberg iceberg)
         {
-            // Hitpoint
-            Vector2 collisionPoint = _col.ClosestPoint(iceberg.transform.position);
-            Debug.Log($"Collision on point: {collisionPoint}");
+            // Convert hitpoint to local space
+            SnapToGrid(_col.ClosestPoint(iceberg.transform.position), out _, out Vector2 localCoords, iceberg.MoveSpeed);          
 
             // Impact
             float impact = iceberg.Weight * _tilesParent.childCount * GameManager.Instance.ProgressSpeed;
-            Debug.Log($"Impact: {impact}");
-
-
+  
+            DestroyInRadius(localCoords, 3);
+            StartCoroutine(DelayedGeoUpdate());
 
 
             IEnumerator Bounce()
@@ -168,6 +147,75 @@ namespace LD54.Floatables.Floes
                 // Bounce the floe off the iceberg
                 yield return null;
             }
+        }
+
+        private void SnapToGrid(Vector2 globalPos, out Vector2 globalCoords, out Vector2 localCoords, float floatDir = 1f)
+        {
+            Vector2 localPos = transform.InverseTransformPoint(globalPos);
+
+            float tileSize = _tilesParent.GetChild(0).transform.localScale.x;
+            float sign = Mathf.Sign(floatDir); // floating left -> positive sign, floating right -> negative sign
+
+            localCoords = new Vector2(Mathf.RoundToInt(localPos.x + tileSize * 0.5f * sign), Mathf.RoundToInt(localPos.y));
+            globalCoords = transform.TransformPoint(localCoords);
+
+            // Check for wrong placement
+            RaycastHit2D rayHitHoriz = Physics2D.Raycast(globalCoords, Vector2.left * sign, tileSize);
+            if (!rayHitHoriz.collider)
+            {
+                Vector2 rayHitVertDir = localCoords.y <= localPos.y ? Vector2.up : Vector2.down;
+                RaycastHit2D rayHitVert = Physics2D.Raycast(globalCoords, rayHitVertDir, tileSize);
+                if (!rayHitVert.collider)
+                {
+                    localCoords = new Vector2(localCoords.x - tileSize * sign, localCoords.y);
+                    globalCoords = transform.TransformPoint(localCoords);
+                }
+            }
+        }
+
+
+        private void DestroyInRadius(Vector2 _normalizedHitPosition, int _radius)
+        {
+            // Traverse the square created by the radius in both x- and y- direction
+            for (int x = -_radius; x < _radius; x++)                                    // Change here to make hemisphere
+            {
+                for (int y = -_radius; y <= _radius; y++)
+                {
+                    // Check only in circle
+                    float distance_squared = x * x + y * y;                             // Used this in order not to use sqrt
+                    if (distance_squared < (float)_radius * (float)_radius)             // Only destroy tile if its inside the radius
+                    {
+                        GameObject tile = FindTile((int)_normalizedHitPosition.x + x,
+                        (int)_normalizedHitPosition.y + y)?.gameObject;                 // Try finding tile at this position
+
+                        // Destroy tile if it exists
+                        if (tile)
+                            Destroy(tile);
+                    }
+                }
+            }
+        }
+
+        // Try to find tile in position x,y
+        private Transform FindTile(int tileCoordX, int tileCoordY)
+        {
+            foreach(Transform tile in _tilesParent)
+            {
+                if(tile.localPosition.x == tileCoordX 
+                    && tile.localPosition.y == tileCoordY)
+                {
+                    return tile;
+                }
+            }
+            return null;
+        }
+
+        private IEnumerator DelayedGeoUpdate()
+        {
+            yield return new WaitForFixedUpdate();
+            yield return new WaitForFixedUpdate();
+            _col.GenerateGeometry(); // this method needs some delay...
+            CalcCG();
         }
 
 #if UNITY_EDITOR
