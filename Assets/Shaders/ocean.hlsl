@@ -181,20 +181,16 @@ void wave_float(
 
 	uv -= 0.5;
 
-	float2 direction = float2(0,0) - uv;
-	float distance = length(direction) * 2;
+	// float2 direction = float2(0,0) - uv;
+	// float distance = length(direction) * 2;
 
-	distance = wave_sdf;
-
-	//out_color = distance;
-	//out_alpha = 1;
-	//return;
+	float distance = wave_sdf; // distance from texture
 
 	distance += perlin_noise * 0.25;
 
 	float wave_distance = distance - progress;
 	float wave = smoothstep(-wave_width, 0, wave_distance);
-	if (wave >= 1) wave = 0;
+	if (wave >= 1) discard;
 
 	wave *= smoothstep(1, 0.75, progress);
 	float4 wave_shading = get_shaded_waves(pixel_grid, wave, wave_color);
