@@ -203,9 +203,10 @@ namespace LD54.Floatables.Floes
 
             if (childCount <= 0)
             {
-                //Loose condition
+                // Loose condition
                 GameManager.Instance.EndGame(false);
                 Destroy(gameObject);
+                Destroy(_player.gameObject);
             }
         }
 

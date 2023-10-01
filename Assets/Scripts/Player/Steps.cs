@@ -1,5 +1,3 @@
-using LD54.Game;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -65,8 +63,6 @@ namespace LD54.Player
 
         private void Update()
         {
-            if (!GameManager.Instance.IsRunning) return;
-
             foreach (var step in steps)
             {
                 step.progress += Time.deltaTime / step.lifetime;
