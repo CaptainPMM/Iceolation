@@ -54,7 +54,7 @@ namespace LD54.Player
             InputManager.onMoveInput += OnMove;
         }
 
-        private void DetachInput()
+        private void DetachInput(bool win)
         {
             InputManager.onMoveInput -= OnMove;
         }

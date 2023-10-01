@@ -8,7 +8,8 @@ namespace LD54.Game
     {
         public delegate void OnGameStateUpdated();
         public event OnGameStateUpdated onGameStarted;
-        public event OnGameStateUpdated onGameEnded;
+        public delegate void OnGameEnded(bool win);
+        public event OnGameEnded onGameEnded;
 
         public static GameManager Instance { get; private set; }
 
