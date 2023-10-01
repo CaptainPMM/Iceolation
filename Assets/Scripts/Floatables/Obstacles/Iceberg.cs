@@ -30,7 +30,7 @@ namespace LD54.Floatables.Obstacles
             if(_isFloating)
             {
                 transform.position = new Vector3(transform.position.x -
-                (MoveSpeed * Time.deltaTime * GameManager.Instance.ProgressSpeed * GameManager.Instance.FloeFlowDirection),
+                (MoveSpeed * Time.deltaTime * GameManager.Instance.ProgressSpeed),
                 transform.position.y, transform.position.z);
             }
 

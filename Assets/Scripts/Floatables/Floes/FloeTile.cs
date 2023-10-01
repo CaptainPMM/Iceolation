@@ -37,7 +37,7 @@ namespace LD54.Floatables.Floes
         private void Update()
         {
             transform.position = new Vector3(transform.position.x -
-                (FloatSpeed * Time.deltaTime * GameManager.Instance.ProgressSpeed * GameManager.Instance.FloeFlowDirection),
+                (FloatSpeed * Time.deltaTime * GameManager.Instance.ProgressSpeed),
                 transform.position.y, transform.position.z);
 
             if (transform.position.x < -GameManager.Instance.GameViewBounds.x)
