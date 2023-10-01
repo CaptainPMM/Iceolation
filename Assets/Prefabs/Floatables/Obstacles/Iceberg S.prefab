@@ -201,5 +201,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Type>k__BackingField: 3
   <MoveSpeed>k__BackingField: 1
-  _weight: 0.5
+  _weight: 0.3
   _isFloating: 0

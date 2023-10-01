@@ -35,8 +35,11 @@ namespace LD54.Floatables.Items
                     Vector3 posOffset = new Vector3(-0.5f, -0.0f, 0.0f);
                     float duration = 0.8f / MoveSpeed + 0.0f;
                     float size = 3.0f;
+                    float purpleWaveChance = 0.5f;
+                    Ocean.Ocean.Shape shape = Random.Range(0.0f, 1.0f) < purpleWaveChance ?
+                        Ocean.Ocean.Shape.PurpleTrail : Ocean.Ocean.Shape.Trail;
                     GameManager.Instance.Ocean.CreateWave(
-                        this.transform.position + posOffset, 0.2f, size, duration, 1.0f, Ocean.Ocean.Shape.Trail
+                        this.transform.position + posOffset, 0.2f, size, duration, 1.0f, shape
                     );
                 }
             }

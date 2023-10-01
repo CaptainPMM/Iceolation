@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Wave Trail
+  m_Name: Wave Trail Purple
   m_Shader: {fileID: -6465566751694194690, guid: 53c1f18865d26bfad92518feace82505, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -58,5 +58,5 @@ Material:
     - _Progress: 0
     - _Wave_Width: 0.487
     m_Colors:
-    - _Wave_Color: {r: 0.047058824, g: 0.29803923, b: 0.58431375, a: 0}
+    - _Wave_Color: {r: 0.9529412, g: 0.34509805, b: 0.7490196, a: 0}
   m_BuildTextureStacks: []

@@ -11,8 +11,9 @@ namespace LD54.Ocean
         public GameObject WavePrefab;
         public Material OvalWaveMaterial;
         public Material TrailWaveMaterial;
+        public Material PurpleTrailWaveMaterial;
 
-        public enum Shape { Circular, Oval, Trail }
+        public enum Shape { Circular, Oval, Trail, PurpleTrail }
 
         [ContextMenu("Create Wave")]
         public void CreateWave()
@@ -39,10 +40,9 @@ namespace LD54.Ocean
                 case Shape.Trail:
                     wave.waveInstance.GetComponent<SpriteRenderer>().material = TrailWaveMaterial;
                     break;
-            }
-            if (shape == Shape.Oval)
-            {
-                wave.waveInstance.GetComponent<SpriteRenderer>().material = OvalWaveMaterial;
+                case Shape.PurpleTrail:
+                    wave.waveInstance.GetComponent<SpriteRenderer>().material = PurpleTrailWaveMaterial;
+                    break;
             }
             wave.waveInstance.GetComponent<SpriteRenderer>().material
                 .SetFloat("_Pixels", radius * 15.0f); // one "pixel" is 15 pixels big
