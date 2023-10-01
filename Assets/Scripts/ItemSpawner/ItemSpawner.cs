@@ -2,29 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using LD54.Game;
-using LD54.Floatables.Floes;
 using LD54.Floatables;
-using LD54.Floatables.Items;
 using LD54.Floatables.Obstacles;
+using LD54.Floatables.Floes;
+using LD54.Floatables.Items;
+using LD54.Utils;
 
 namespace LD54.ItemGenerator
 {
     public class ItemSpawner : MonoBehaviour
     {
         [SerializeField]
-        private List<GameObject> itemPrefabs = new();
+        private List<WeightedValue<GameObject>> spawnElements = new();
 
         [SerializeField]
         private float minTimeBetweenSpawns = 4f;
 
         [SerializeField]
         private float maxTimeBetweenSpawns = 12f;
-
-        [SerializeField]
-        private float collectableProbability = 0.05f;
-
-        [SerializeField]
-        private float floeProbability = 0.3f;
 
         private void Start()
         {
@@ -60,32 +55,25 @@ namespace LD54.ItemGenerator
         {
             Vector3 spawnPosition = new Vector3(
                 GameManager.Instance.GameViewBounds.x,
-                GameManager.Instance.GameViewBounds.y * Random.Range(-1.0f, 1.0f),
+                GameManager.Instance.GameViewBounds.y * Random.Range(-1f, 1f),
                 0f
             );
 
-            //itemPrefabs[Random.Range(0, Mathf.FloorToInt(itemPrefabs.Count))]
-
-            int itemIndex = 0;  // Default is iceberg
-            float rng = Random.Range(0.0f, 1.0f);
-
-            if(rng > collectableProbability && rng < collectableProbability + floeProbability) { itemIndex = 1; }
-            else if(rng < collectableProbability) { itemIndex = 2; }
-
-            GameObject item = Instantiate(itemPrefabs[itemIndex], spawnPosition, Quaternion.identity);
-            Floatable fItem = item.GetComponent<Floatable>();
+            GameObject spawnElement = WeightedValue<GameObject>.GetWeightedRandom(spawnElements);
+            GameObject element = Instantiate(spawnElement, spawnPosition, Quaternion.identity);
+            Floatable floatable = element.GetComponent<Floatable>();
 
             // Object specific initialization
-            switch (fItem.Type)
+            switch (floatable.Type)
             {
                 case FloatableType.Floe:
-                    (fItem as FloeTile).IsFloating = true;
+                    (floatable as FloeTile).IsFloating = true;
                     break;
                 case FloatableType.Obstacle:
-                    (fItem as Iceberg).IsFloating = true;
+                    (floatable as Iceberg).IsFloating = true;
                     break;
                 case FloatableType.Item:
-                    (fItem as Sunglasses).IsFloating = true;
+                    (floatable as Sunglasses).IsFloating = true;
                     break;
             }
         }

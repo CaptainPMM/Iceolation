@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 708738319366293006}
   - component: {fileID: 4673483171445585251}
   m_Layer: 0
-  m_Name: Item Generator
+  m_Name: Item Spawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,11 +44,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14157b7600fc30246b1a8069db10dfb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemPrefabs:
-  - {fileID: 8196508433031764401, guid: 31befe9f4c3410440bab77f880af5fa1, type: 3}
-  - {fileID: 1475971269492781323, guid: e610d13c597d549ff897ac20ef902d7e, type: 3}
-  - {fileID: 143469806832641007, guid: e5923b3d606b9ab43bf928b8f8ee2f41, type: 3}
+  spawnElements:
+  - weight: 0.25
+    value: {fileID: 8196508433031764401, guid: 9b2f4638f6bec4438aee3c4269c7f8e2, type: 3}
+  - weight: 0.2
+    value: {fileID: 8196508433031764401, guid: 8a966bc88c50043cd897d3718904dd3f, type: 3}
+  - weight: 0.15
+    value: {fileID: 8196508433031764401, guid: 31befe9f4c3410440bab77f880af5fa1, type: 3}
+  - weight: 0.35
+    value: {fileID: 1475971269492781323, guid: e610d13c597d549ff897ac20ef902d7e, type: 3}
+  - weight: 0.05
+    value: {fileID: 143469806832641007, guid: e5923b3d606b9ab43bf928b8f8ee2f41, type: 3}
   minTimeBetweenSpawns: 4
   maxTimeBetweenSpawns: 12
-  collectableProbability: 0.01
-  floeProbability: 0.3
