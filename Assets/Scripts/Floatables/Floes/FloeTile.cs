@@ -51,7 +51,9 @@ namespace LD54.Floatables.Floes
                 Vector3 posOffset = new Vector3(-0.8f, -0.5f, 0.0f);
                 float duration = 0.8f / FloatSpeed + 0.5f;
                 float size = 4.0f;
-                GameManager.Instance.Ocean.CreateWave(this.transform.position + posOffset, 0.2f, size, duration, 0.6f);
+                GameManager.Instance.Ocean.CreateWave(
+                    this.transform.position + posOffset, 0.2f, size, duration, 1.0f, Ocean.Ocean.Shape.Trail
+                );
             }
         }
 

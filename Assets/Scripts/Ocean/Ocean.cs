@@ -9,6 +9,10 @@ namespace LD54.Ocean
     {
         public float WaterSpeed = 3.0f;
         public GameObject WavePrefab;
+        public Material OvalWaveMaterial;
+        public Material TrailWaveMaterial;
+
+        public enum Shape { Circular, Oval, Trail }
 
         [ContextMenu("Create Wave")]
         public void CreateWave()
@@ -18,7 +22,7 @@ namespace LD54.Ocean
 
         public void CreateWave(
             Vector2 worldPosition, float progress = 0.0f, float radius = 2.0f,
-            float duration = 1.0f, float y_stretch = 1.0f
+            float duration = 1.0f, float y_stretch = 1.0f, Shape shape = Shape.Circular
         )
         {
             WaveData wave = new();
@@ -27,6 +31,19 @@ namespace LD54.Ocean
             wave.waveInstance = Instantiate(WavePrefab);
             wave.waveInstance.transform.position = worldPosition;
             wave.waveInstance.transform.localScale = new Vector3(radius, radius * y_stretch, 1.0f);
+            switch (shape)
+            {
+                case Shape.Oval:
+                    wave.waveInstance.GetComponent<SpriteRenderer>().material = OvalWaveMaterial;
+                    break;
+                case Shape.Trail:
+                    wave.waveInstance.GetComponent<SpriteRenderer>().material = TrailWaveMaterial;
+                    break;
+            }
+            if (shape == Shape.Oval)
+            {
+                wave.waveInstance.GetComponent<SpriteRenderer>().material = OvalWaveMaterial;
+            }
             wave.waveInstance.GetComponent<SpriteRenderer>().material
                 .SetFloat("_Pixels", radius * 15.0f); // one "pixel" is 15 pixels big
             wave.waveInstance.GetComponent<SpriteRenderer>().material

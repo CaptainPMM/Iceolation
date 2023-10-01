@@ -168,6 +168,7 @@ void ocean_float(
 
 void wave_float(
 	float2 uv, float progress, float wave_width, float pixels, float3 wave_color,
+	float wave_sdf,
 	out float3 out_color, out float out_alpha
 ) {
 	uv *= pixels;
@@ -181,7 +182,15 @@ void wave_float(
 	uv -= 0.5;
 
 	float2 direction = float2(0,0) - uv;
-	float distance = length(direction) * 2 + perlin_noise * 0.25;
+	float distance = length(direction) * 2;
+
+	distance = wave_sdf;
+
+	//out_color = distance;
+	//out_alpha = 1;
+	//return;
+
+	distance += perlin_noise * 0.25;
 
 	float wave_distance = distance - progress;
 	float wave = smoothstep(-wave_width, 0, wave_distance);
