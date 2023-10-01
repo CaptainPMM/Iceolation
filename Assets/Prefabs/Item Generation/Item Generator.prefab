@@ -50,5 +50,5 @@ MonoBehaviour:
   - {fileID: 143469806832641007, guid: e5923b3d606b9ab43bf928b8f8ee2f41, type: 3}
   minTimeBetweenSpawns: 4
   maxTimeBetweenSpawns: 12
-  collectableProbability: 0.05
+  collectableProbability: 0.01
   floeProbability: 0.3

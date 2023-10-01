@@ -1,3 +1,4 @@
+using LD54.Game;
 using UnityEngine;
 
 namespace LD54.Player
@@ -42,6 +43,8 @@ namespace LD54.Player
 
         private void OnMove(Vector2 rawInput)
         {
+            if(!GameManager.Instance.IsRunning) { return; }
+
             moveInput = rawInput;
 
             animController.SetFloat("moveX", moveInput.x);

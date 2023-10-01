@@ -23,14 +23,8 @@ namespace LD54.Game
             else Instance = this;
         }
 
-
-        private void Start()
-        {
-            StartCoroutine(StartGame());                // CHANGE ME! Do this when the game is actually started, not in the Start()
-        }
-
         // Start 'counter'
-        private IEnumerator StartGame()
+        private IEnumerator StartProgress()
         {
             IsRunning = true;
 
@@ -39,6 +33,11 @@ namespace LD54.Game
                 yield return new WaitForSeconds(15f);
                 ProgressSpeed += 0.1f;
             }
+        }
+
+        public void StartGame()
+        {
+            StartCoroutine(StartProgress());
         }
     }
 }
