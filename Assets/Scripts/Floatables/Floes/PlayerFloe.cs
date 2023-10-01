@@ -35,15 +35,24 @@ namespace LD54.Floatables.Floes
 
         private void Update()
         {
+            // Calc desired movement
             Vector3 cgToPlayer = _player.transform.position - transform.TransformPoint(_cg);
             float playerSteeringMoment = _player.Weight * (Mathf.InverseLerp(-_col.bounds.extents.y, _col.bounds.extents.y, cgToPlayer.y) - 0.5f) * 2f;
             Vector3 movement = new Vector3(0f, playerSteeringMoment, 0f) * _moveSpeed * Time.deltaTime; // no x movement for now
 
-            if (_col.bounds.max.y + movement.y < GameManager.Instance.GameViewBounds.y && _col.bounds.min.y + movement.y > -GameManager.Instance.GameViewBounds.y)
+            // Check bounds (only y for now)
+            if (movement.y >= 0f)
             {
-                transform.position += movement;
-                _player.transform.position += movement;
+                if (_col.bounds.max.y + movement.y > GameManager.Instance.GameViewBounds.y) movement.y = 0f;
             }
+            else
+            {
+                if (_col.bounds.min.y + movement.y < -GameManager.Instance.GameViewBounds.y) movement.y = 0f;
+            }
+
+            // Move result
+            transform.position += movement;
+            _player.transform.position += movement;
         }
 
         [ContextMenu("Calculate CG")]
