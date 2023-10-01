@@ -10,6 +10,12 @@ namespace LD54.Player
         public Rigidbody2D RB => _rb;
 
         [SerializeField]
+        private CircleCollider2D _col;
+
+        [SerializeField]
+        private LayerMask _playerFloeLayer;
+
+        [SerializeField]
         private float speed = 3f;
 
         [field: SerializeField] public float Weight { get; private set; } = 1f;
@@ -65,7 +71,20 @@ namespace LD54.Player
                 rbController.AddForce(rawInput * acceleration * 200f * Time.deltaTime);     // 200f = factor, so acceleration doesn't need to be 1000 but can be 5 instead
             */
 
-            transform.position += new Vector3(moveInput.x, moveInput.y, 0f).normalized * speed * Time.deltaTime;
+            Vector3 movement = new Vector3(moveInput.x, moveInput.y, 0f).normalized * speed * Time.deltaTime;
+
+            // Check floe bounds
+            RaycastHit2D hitR = Physics2D.Raycast((Vector2)_col.bounds.center + Vector2.right * _col.radius, Vector2.right, 0.001f, _playerFloeLayer);
+            RaycastHit2D hitL = Physics2D.Raycast((Vector2)_col.bounds.center + Vector2.left * _col.radius, Vector2.left, 0.001f, _playerFloeLayer);
+            RaycastHit2D hitU = Physics2D.Raycast((Vector2)_col.bounds.center + Vector2.up * _col.radius, Vector2.up, 0.001f, _playerFloeLayer);
+            RaycastHit2D hitD = Physics2D.Raycast((Vector2)_col.bounds.center + Vector2.down * _col.radius, Vector2.down, 0.001f, _playerFloeLayer);
+
+            if (!hitR.collider) movement.x = Mathf.Min(movement.x, 0f);
+            if (!hitL.collider) movement.x = Mathf.Max(movement.x, 0f);
+            if (!hitU.collider) movement.y = Mathf.Min(movement.y, 0f);
+            if (!hitD.collider) movement.y = Mathf.Max(movement.y, 0f);
+
+            transform.position += movement;
         }
     }
 }
