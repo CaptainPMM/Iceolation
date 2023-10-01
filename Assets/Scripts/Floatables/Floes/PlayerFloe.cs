@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using LD54.Player;
 using LD54.Game;
+using LD54.Floatables.Obstacles;
 
 namespace LD54.Floatables.Floes
 {
@@ -14,6 +15,7 @@ namespace LD54.Floatables.Floes
 
         [Header("Settings")]
         [SerializeField] private Vector2 _moveSpeed = new(1f, 1f);
+        [SerializeField] private float _steeringAxisYDeadzone = 0.5f;
 
         [Header("State")]
         [SerializeField] private Vector2 _cg; // center of gravity in local space
@@ -37,8 +39,12 @@ namespace LD54.Floatables.Floes
         {
             // Calc desired movement
             Vector3 cgToPlayer = _player.transform.position - transform.TransformPoint(_cg);
-            float playerSteeringMoment = _player.Weight * (Mathf.InverseLerp(-_col.bounds.extents.y, _col.bounds.extents.y, cgToPlayer.y) - 0.5f) * 2f;
-            Vector3 movement = new Vector3(0f, playerSteeringMoment, 0f) * _moveSpeed * Time.deltaTime; // no x movement for now
+
+            float playerSteeringYMoment = 0f;
+            if (Mathf.Abs(cgToPlayer.y) * 2f > _steeringAxisYDeadzone)
+                playerSteeringYMoment = _player.Weight * (Mathf.InverseLerp(-_col.bounds.extents.y, _col.bounds.extents.y, cgToPlayer.y) - 0.5f) * 2f;
+
+            Vector3 movement = new Vector3(0f, playerSteeringYMoment, 0f) * _moveSpeed * Time.deltaTime; // no x movement for now
 
             // Check bounds (only y for now)
             if (movement.y >= 0f)
@@ -62,11 +68,11 @@ namespace LD54.Floatables.Floes
 
                 float baseChance = 0.05f;
                 float waveProbabilityPerFloe = baseChance;
-                if (cgDirection * playerSteeringMoment >= 0.0f)
+                if (cgDirection * playerSteeringYMoment >= 0.0f)
                 {
                     // tile is at the side the floe is moving towards
                     // the more the floe is tilted the higher the probability of a wave
-                    waveProbabilityPerFloe += Mathf.Abs(playerSteeringMoment) * Mathf.Abs(cgDirection) + baseChance;
+                    waveProbabilityPerFloe += Mathf.Abs(playerSteeringYMoment) * Mathf.Abs(cgDirection) + baseChance;
                 }
                 waveProbabilityPerFloe *= Time.deltaTime;
 
@@ -90,7 +96,7 @@ namespace LD54.Floatables.Floes
             _cg = summedPositions / cols.Length; // every tile has the same weight - otherwise multiply postions with weight and divide by total weight
 
             _steeringAxisY.transform.localPosition = new Vector3(transform.InverseTransformPoint(_col.bounds.center).x, _cg.y, 0f);
-            _steeringAxisY.transform.localScale = new Vector3(_col.bounds.extents.x * 2f, _steeringAxisY.localScale.y, 1f);
+            _steeringAxisY.transform.localScale = new Vector3(_col.bounds.extents.x * 2f, _steeringAxisYDeadzone, 1f);
         }
 
         private void OnTriggerEnter2D(Collider2D other)
@@ -104,6 +110,9 @@ namespace LD54.Floatables.Floes
                 case FloatableType.Item:
                     if (!_player.PlayerSunglassesVisible) _player.PlayerSunglassesVisible = true;
                     Destroy(other.gameObject);
+                    break;
+                case FloatableType.Obstacle:
+                    CollideObstacle(floatable as Iceberg);
                     break;
             }
         }
@@ -138,6 +147,26 @@ namespace LD54.Floatables.Floes
                 yield return new WaitForFixedUpdate();
                 _col.GenerateGeometry(); // this method needs some delay...
                 CalcCG();
+            }
+        }
+
+        private void CollideObstacle(Iceberg iceberg)
+        {
+            // Hitpoint
+            Vector2 collisionPoint = _col.ClosestPoint(iceberg.transform.position);
+            Debug.Log($"Collision on point: {collisionPoint}");
+
+            // Impact
+            float impact = iceberg.Weight * _tilesParent.childCount * GameManager.Instance.ProgressSpeed;
+            Debug.Log($"Impact: {impact}");
+
+
+
+
+            IEnumerator Bounce()
+            {
+                // Bounce the floe off the iceberg
+                yield return null;
             }
         }
 
