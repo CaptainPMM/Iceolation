@@ -56,6 +56,6 @@ Material:
     - _Wave_Length: 0.418
     - _Wave_Width: 0.479
     m_Colors:
-    - _Background_Color: {r: 0, g: 0.03144642, b: 0.4245283, a: 0}
-    - _Wave_Color: {r: 0.10568706, g: 0.47824687, b: 0.8962264, a: 0}
+    - _Background_Color: {r: 0, g: 0.025157135, b: 0.33962262, a: 0}
+    - _Wave_Color: {r: 0.046902817, g: 0.29992384, b: 0.5849056, a: 0}
   m_BuildTextureStacks: []
