@@ -107,11 +107,17 @@ namespace LD54.Floatables.Floes
         {
             BoxCollider2D[] cols = _tilesParent.GetComponentsInChildren<BoxCollider2D>();
             Vector3 summedPositions = Vector3.zero;
+            int numDestroyed = 0;
             foreach (BoxCollider2D col in _tilesParent.GetComponentsInChildren<BoxCollider2D>())
             {
+                if (col.compositeOperation == Collider2D.CompositeOperation.None)
+                {
+                    numDestroyed++;
+                    continue;
+                }
                 summedPositions += col.transform.parent.localPosition;
             }
-            _cg = summedPositions / cols.Length; // every tile has the same weight - otherwise multiply postions with weight and divide by total weight
+            _cg = summedPositions / (cols.Length - numDestroyed); // every tile has the same weight - otherwise multiply postions with weight and divide by total weight
 
             _steeringAxisX.transform.localPosition = new Vector3(_cg.x, transform.InverseTransformPoint(_col.bounds.center).y, 0f);
             _steeringAxisX.transform.localScale = new Vector3(_steeringAxisXDeadzone, _col.bounds.extents.y * 2f, 1f);
@@ -230,7 +236,7 @@ namespace LD54.Floatables.Floes
                         // Destroy tile if it exists
                         if (tile)
                         {
-                            Destroy(tile);
+                            tile.GetComponent<FloeTile>().AnimatedDestroy();
                             childCount--;
                         }
                     }

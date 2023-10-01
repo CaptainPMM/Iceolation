@@ -57,14 +57,22 @@ namespace LD54.Floatables.Floes
             }
         }
 
-        private void OnDestroy()
+        public void AnimatedDestroy()
         {
-            Vector3 posOffset = new (0.0f, -0.5f, 0.0f);
+            _col.gameObject.layer = LayerMask.NameToLayer("Player Floe");
+            _col.compositeOperation = Collider2D.CompositeOperation.None;
+
+            Animator anim = GetComponentInChildren<Animator>();
+            anim.enabled = true;
+
+            Vector3 posOffset = new(0.0f, -0.5f, 0.0f);
             float duration = 1.0f;
             float size = 6.0f;
             GameManager.Instance.Ocean.CreateWave(
                 this.transform.position + posOffset, 0.0f, size, duration, 1.0f, Ocean.Ocean.Shape.Circular
             );
+
+            Destroy(gameObject, anim.GetCurrentAnimatorClipInfo(0)[0].clip.length);
         }
 
 #if UNITY_EDITOR
