@@ -8,6 +8,7 @@ public class Steps : MonoBehaviour
 {
     public GameObject StepPrefab;
     public GameObject StepContainer;
+    public float StepLifetime = 2.0f;
 
     public void StepEvent()
     {
@@ -42,7 +43,7 @@ public class Steps : MonoBehaviour
         ActiveStep step = new()
         {
             progress = 0.0f,
-            lifeTime = 1.0f,
+            lifetime = StepLifetime,
             instance = Instantiate(StepPrefab)
         };
 
@@ -64,7 +65,7 @@ public class Steps : MonoBehaviour
     {
         foreach (var step in steps)
         {
-            step.progress += Time.deltaTime / step.lifeTime;
+            step.progress += Time.deltaTime / step.lifetime;
             step.instance.GetComponent<SpriteRenderer>().material
                 .SetFloat("_Progress", step.progress);
 
@@ -76,7 +77,7 @@ public class Steps : MonoBehaviour
     private class ActiveStep
     {
         public float progress;
-        public float lifeTime;
+        public float lifetime;
         public GameObject instance;
     }
 }
