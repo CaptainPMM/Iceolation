@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using LD54.Game;
 using LD54.Floatables.Floes;
+using LD54.Floatables;
+using LD54.Floatables.Items;
+using LD54.Floatables.Obstacles;
 
 namespace LD54.ItemGenerator
 {
@@ -46,10 +49,20 @@ namespace LD54.ItemGenerator
             );
             GameObject item = Instantiate(itemPrefabs[Random.Range(0, Mathf.FloorToInt(itemPrefabs.Count))], spawnPosition, Quaternion.identity);
 
+            Floatable fItem = item.GetComponent<Floatable>();
+
             // Object specific initialization
-            if (item.TryGetComponent(out FloeTile floeTile))
+            switch (fItem.Type)
             {
-                floeTile.IsFloating = true;
+                case FloatableType.Floe:
+                    (fItem as FloeTile).IsFloating = true;
+                    break;
+                case FloatableType.Obstacle:
+                    (fItem as Iceberg).IsFloating = true;
+                    break;
+                case FloatableType.Item:
+                    (fItem as Sunglasses).IsFloating = true;
+                    break;
             }
         }
     }
