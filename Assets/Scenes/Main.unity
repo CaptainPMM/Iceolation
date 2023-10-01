@@ -185,6 +185,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6e5bd991dac7648458137c7233deffa7, type: 3}
+--- !u!114 &358331212 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2009713927425399116, guid: cd69628bbdaf1cb4e9151683dd3a41d1, type: 3}
+  m_PrefabInstance: {fileID: 7616476059637265443}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b82006026c6fe3e459b5b7535fbba9e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &736151247
 GameObject:
   m_ObjectHideFlags: 0
@@ -641,6 +652,58 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2009713927425399116, guid: cd69628bbdaf1cb4e9151683dd3a41d1, type: 3}
+      propertyPath: _startGame.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2009713927425399116, guid: cd69628bbdaf1cb4e9151683dd3a41d1, type: 3}
+      propertyPath: _startGame.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2009713927425399116, guid: cd69628bbdaf1cb4e9151683dd3a41d1, type: 3}
+      propertyPath: _startGame.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2009713927425399116, guid: cd69628bbdaf1cb4e9151683dd3a41d1, type: 3}
+      propertyPath: _startGame.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 358331212}
+    - target: {fileID: 2009713927425399116, guid: cd69628bbdaf1cb4e9151683dd3a41d1, type: 3}
+      propertyPath: _startGame.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1341226475}
+    - target: {fileID: 2009713927425399116, guid: cd69628bbdaf1cb4e9151683dd3a41d1, type: 3}
+      propertyPath: _startGame.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2009713927425399116, guid: cd69628bbdaf1cb4e9151683dd3a41d1, type: 3}
+      propertyPath: _startGame.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2009713927425399116, guid: cd69628bbdaf1cb4e9151683dd3a41d1, type: 3}
+      propertyPath: _startGame.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: HideTitleScreen
+      objectReference: {fileID: 0}
+    - target: {fileID: 2009713927425399116, guid: cd69628bbdaf1cb4e9151683dd3a41d1, type: 3}
+      propertyPath: _startGame.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: StartGame
+      objectReference: {fileID: 0}
+    - target: {fileID: 2009713927425399116, guid: cd69628bbdaf1cb4e9151683dd3a41d1, type: 3}
+      propertyPath: _startGame.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: LD54.UI.TitleScreenViewController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2009713927425399116, guid: cd69628bbdaf1cb4e9151683dd3a41d1, type: 3}
+      propertyPath: _startGame.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: LD54.Game.GameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2009713927425399116, guid: cd69628bbdaf1cb4e9151683dd3a41d1, type: 3}
+      propertyPath: _startGame.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 2009713927425399116, guid: cd69628bbdaf1cb4e9151683dd3a41d1, type: 3}
+      propertyPath: _startGame.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 3384087592795560813, guid: cd69628bbdaf1cb4e9151683dd3a41d1, type: 3}
       propertyPath: m_Pivot.x
       value: 0

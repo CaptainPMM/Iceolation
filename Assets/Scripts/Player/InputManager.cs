@@ -7,6 +7,9 @@ namespace LD54.Player
         public delegate void OnMoveInput(Vector2 movement);
         public static event OnMoveInput onMoveInput;
 
+        public delegate void OnAnyKeyPressed();
+        public static event OnAnyKeyPressed onAnyKeyPressed;
+
         private KeyCode moveUp = KeyCode.W;
         private KeyCode moveDown = KeyCode.S;
         private KeyCode moveLeft = KeyCode.A;
@@ -19,6 +22,11 @@ namespace LD54.Player
         void Update()
         {
             moveInput = new Vector2(0, 0);
+
+            if(Input.anyKeyDown)
+            {
+                onAnyKeyPressed?.Invoke();
+            }
 
             // UP
             if (Input.GetKey(moveUp))
