@@ -60,10 +60,16 @@ namespace LD54.Floatables.Floes
             {
                 float cgDirection = tile.localPosition.y - _cg.y;
 
-                if (cgDirection * playerSteeringMoment < 0.0f) continue; // skip tiles at wrong side of floe
+                float baseChance = 0.05f;
+                float waveProbabilityPerFloe = baseChance;
+                if (cgDirection * playerSteeringMoment >= 0.0f)
+                {
+                    // tile is at the side the floe is moving towards
+                    // the more the floe is tilted the higher the probability of a wave
+                    waveProbabilityPerFloe += Mathf.Abs(playerSteeringMoment) * Mathf.Abs(cgDirection) + baseChance;
+                }
+                waveProbabilityPerFloe *= Time.deltaTime;
 
-                // the more the floe is tilted the higher the probability of a wave
-                float waveProbabilityPerFloe = Mathf.Abs(playerSteeringMoment) * Mathf.Abs(cgDirection) * Time.deltaTime;
                 if (Random.Range(0.0f, 1.0f) < waveProbabilityPerFloe)
                 {
                     Vector3 posOffset = new Vector3(0.0f, -0.25f, 0.0f);
