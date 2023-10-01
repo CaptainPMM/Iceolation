@@ -20,6 +20,12 @@ namespace LD54.ItemGenerator
         [SerializeField]
         private float maxTimeBetweenSpawns = 12f;
 
+        [SerializeField]
+        private float collectableProbability = 0.05f;
+
+        [SerializeField]
+        private float floeProbability = 0.3f;
+
         void Start()
         {
             StartCoroutine(SpawnObjects());
@@ -47,8 +53,16 @@ namespace LD54.ItemGenerator
                 GameManager.Instance.GameViewBounds.y * Random.Range(-1.0f, 1.0f),
                 0f
             );
-            GameObject item = Instantiate(itemPrefabs[Random.Range(0, Mathf.FloorToInt(itemPrefabs.Count))], spawnPosition, Quaternion.identity);
 
+            //itemPrefabs[Random.Range(0, Mathf.FloorToInt(itemPrefabs.Count))]
+
+            int itemIndex = 0;  // Default is iceberg
+            float rng = Random.Range(0.0f, 1.0f);
+
+            if(rng > collectableProbability && rng < collectableProbability + floeProbability) { itemIndex = 1; }
+            else if(rng < collectableProbability) { itemIndex = 2; }
+
+            GameObject item = Instantiate(itemPrefabs[itemIndex], spawnPosition, Quaternion.identity);
             Floatable fItem = item.GetComponent<Floatable>();
 
             // Object specific initialization
