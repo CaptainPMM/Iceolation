@@ -41,7 +41,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Pixels: 25
+    - _Pixels: 21
     - _Progress: 0
     m_Colors:
     - _Color: {r: 0.31025267, g: 0.43254036, b: 0.7924528, a: 1}
