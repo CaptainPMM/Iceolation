@@ -17,7 +17,7 @@ namespace LD54.Game
 
         [field: SerializeField] public Ocean.Ocean Ocean { get; private set; }
 
-        [field: SerializeField] public float ProgressSpeed { get; private set; } = 1f;
+        [field: SerializeField] public float ProgressSpeed = 1f;
 
         public bool IsRunning { get; private set; } = false;
 
