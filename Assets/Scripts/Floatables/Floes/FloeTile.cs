@@ -40,7 +40,7 @@ namespace LD54.Floatables.Floes
                 (FloatSpeed * Time.deltaTime * GameManager.Instance.ProgressSpeed),
                 transform.position.y, transform.position.z);
 
-            if (transform.position.x < -GameManager.Instance.GameViewBounds.x)
+            if (transform.position.x < -GameManager.Instance.GameViewBounds.x - 3.0f)
             {
                 Destroy(gameObject);
             }

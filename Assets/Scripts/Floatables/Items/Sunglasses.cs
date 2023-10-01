@@ -44,7 +44,7 @@ namespace LD54.Floatables.Items
                 }
             }
 
-            if (transform.position.x < -GameManager.Instance.GameViewBounds.x)
+            if (transform.position.x < -GameManager.Instance.GameViewBounds.x - 3.0f)
             {
                 Destroy(gameObject);
             }

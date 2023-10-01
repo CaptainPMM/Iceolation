@@ -12,6 +12,12 @@ namespace LD54.ItemGenerator
 {
     public class ItemSpawner : MonoBehaviour
     {
+        public float BorderUpperOffset = -1.0f;
+        public float BorderLowerOffset = -0.5f;
+        public GameObject BorderObjectPrefab;
+        public GameObject BordersContainer;
+        public float BorderObjectFrequency = 0.3f;
+
         [SerializeField]
         private List<WeightedValue<GameObject>> spawnElements = new();
 
@@ -24,6 +30,7 @@ namespace LD54.ItemGenerator
         private void Start()
         {
             GameManager.Instance.onGameStarted += StartItemSpawning;
+            StartCoroutine(SpawnBorderObjects());
         }
 
         private void OnDestroy()
@@ -34,6 +41,31 @@ namespace LD54.ItemGenerator
         private void StartItemSpawning()
         {
             StartCoroutine(SpawnObjects());
+        }
+
+        private IEnumerator SpawnBorderObjects()
+        {
+            yield return null;
+            while (true)
+            {
+                SpawnBorderObject();
+                yield return new WaitForSeconds(1.0f/(BorderObjectFrequency + Random.Range(-0.1f, 0.1f)));
+            }
+        }
+
+        private void SpawnBorderObject()
+        {
+            SpawnBorderObject(GameManager.Instance.GameViewBounds.y + BorderUpperOffset + Random.Range(0f, 1.0f));
+            SpawnBorderObject(-GameManager.Instance.GameViewBounds.y - BorderLowerOffset - Random.Range(0f, 1.0f));
+        }
+
+        private void SpawnBorderObject(float y)
+        {
+            Vector3 spawnPosition = new (GameManager.Instance.GameViewBounds.x, y, 0f);
+
+            GameObject element = Instantiate(BorderObjectPrefab, spawnPosition, Quaternion.identity);
+            element.GetComponent<Iceberg>().IsFloating = true;
+            element.transform.parent = BordersContainer.transform;
         }
 
         private IEnumerator SpawnObjects()
