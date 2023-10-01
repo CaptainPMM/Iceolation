@@ -264,6 +264,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1218693327 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3491217448692461821, guid: 1cb5bd8a6eba9a6688cfbb1966f9ea74, type: 3}
+  m_PrefabInstance: {fileID: 8513426741967811553}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b20214c9ecb9a270e8bad426f84d569b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1341226475 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3349347163067300421, guid: cefb41cba43ae124e8fd8c255e330650, type: 3}
@@ -595,6 +606,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3349347163067300421, guid: cefb41cba43ae124e8fd8c255e330650, type: 3}
+      propertyPath: <Ocean>k__BackingField
+      value: 
+      objectReference: {fileID: 1218693327}
     - target: {fileID: 4206846361648598063, guid: cefb41cba43ae124e8fd8c255e330650, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

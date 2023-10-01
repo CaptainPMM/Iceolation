@@ -1,4 +1,5 @@
 using System.Collections;
+using LD54.Ocean;
 using UnityEngine;
 
 namespace LD54.Game
@@ -12,6 +13,8 @@ namespace LD54.Game
         public static GameManager Instance { get; private set; }
 
         [field: SerializeField] public Vector2 GameViewBounds { get; private set; } = new(15f, 5f);
+
+        [field: SerializeField] public Ocean.Ocean Ocean { get; private set; }
 
         [field: SerializeField] public float ProgressSpeed { get; private set; } = 1f;
 
