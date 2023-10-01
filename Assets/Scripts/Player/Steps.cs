@@ -1,3 +1,4 @@
+using LD54.Game;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -63,6 +64,8 @@ public class Steps : MonoBehaviour
     {
         foreach (var step in steps)
         {
+            if (!GameManager.Instance.IsRunning) { return; }
+
             step.progress += Time.deltaTime / step.lifeTime;
             step.instance.GetComponent<SpriteRenderer>().material
                 .SetFloat("_Progress", step.progress);

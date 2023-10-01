@@ -48,5 +48,10 @@ namespace LD54.Game
             onGameStarted?.Invoke();
             StartCoroutine(StartProgress());
         }
+
+        public void EndGame(bool win)
+        {
+            onGameEnded?.Invoke(win);
+        }
     }
 }

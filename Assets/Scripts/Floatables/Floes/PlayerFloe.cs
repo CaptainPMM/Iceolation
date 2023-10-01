@@ -138,7 +138,8 @@ namespace LD54.Floatables.Floes
             // Impact
             float impact = iceberg.Weight * _tilesParent.childCount * GameManager.Instance.ProgressSpeed;
   
-            DestroyInRadius(localCoords, 3);
+            DestroyInRadius(localCoords, (int)(2 + impact * 0.05f));
+
             StartCoroutine(DelayedGeoUpdate());
 
 
@@ -176,6 +177,7 @@ namespace LD54.Floatables.Floes
 
         private void DestroyInRadius(Vector2 _normalizedHitPosition, int _radius)
         {
+            int childCount = _tilesParent.childCount;
             // Traverse the square created by the radius in both x- and y- direction
             for (int x = -_radius; x < _radius; x++)                                    // Change here to make hemisphere
             {
@@ -190,9 +192,19 @@ namespace LD54.Floatables.Floes
 
                         // Destroy tile if it exists
                         if (tile)
+                        {
                             Destroy(tile);
+                            childCount--;
+                        }
                     }
                 }
+            }
+
+            if(childCount <= 0)
+            {
+                //Loose condition
+                GameManager.Instance.EndGame(false);
+                Destroy(gameObject);
             }
         }
 
