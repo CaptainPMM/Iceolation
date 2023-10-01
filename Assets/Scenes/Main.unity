@@ -483,7 +483,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 10
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -688,6 +688,14 @@ PrefabInstance:
     - target: {fileID: 2875616710395149722, guid: 1cb5bd8a6eba9a6688cfbb1966f9ea74, type: 3}
       propertyPath: m_Name
       value: Ocean
+      objectReference: {fileID: 0}
+    - target: {fileID: 5556960709200312939, guid: 1cb5bd8a6eba9a6688cfbb1966f9ea74, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 5556960709200312939, guid: 1cb5bd8a6eba9a6688cfbb1966f9ea74, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 5556960709200312939, guid: 1cb5bd8a6eba9a6688cfbb1966f9ea74, type: 3}
       propertyPath: m_LocalPosition.x
