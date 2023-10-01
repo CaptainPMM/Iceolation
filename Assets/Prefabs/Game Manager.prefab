@@ -44,5 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24bfac32c62ba94418c3ccb9f5b0266f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <GameViewBounds>k__BackingField: {x: 18.7778, y: 10}
+  <GameViewBounds>k__BackingField: {x: 18, y: 10}
+  <Ocean>k__BackingField: {fileID: 0}
   <ProgressSpeed>k__BackingField: 1
