@@ -97,5 +97,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b20214c9ecb9a270e8bad426f84d569b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WaterSpeed: 6
+  WaterSpeed: 3
   WavePrefab: {fileID: 296569619496536589, guid: b9a02f28750f1eb35a05d5a68f204fb6, type: 3}
