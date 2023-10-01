@@ -30,14 +30,14 @@ namespace LD54.Player
             }
         }
 
-        private void OnEnable()
+        private void Start()
         {
             animController = GetComponent<Animator>();
             GameManager.Instance.onGameStarted += AttachInput;
             GameManager.Instance.onGameEnded += DetachInput;
         }
 
-        private void OnDisable()
+        private void OnDestroy()
         {
             GameManager.Instance.onGameStarted -= AttachInput;
             GameManager.Instance.onGameEnded -= DetachInput;
