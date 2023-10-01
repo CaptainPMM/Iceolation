@@ -44,6 +44,15 @@ namespace LD54.Floatables.Floes
             {
                 Destroy(gameObject);
             }
+
+            float waveProbability = 2.5f * FloatSpeed * Time.deltaTime;
+            if (Random.Range(0.0f, 1.0f) < waveProbability)
+            {
+                Vector3 posOffset = new Vector3(-0.8f, -0.5f, 0.0f);
+                float duration = 0.8f / FloatSpeed + 0.5f;
+                float size = 4.0f;
+                GameManager.Instance.Ocean.CreateWave(this.transform.position + posOffset, 0.2f, size, duration, 0.6f);
+            }
         }
 
 #if UNITY_EDITOR
