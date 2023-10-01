@@ -29,7 +29,7 @@ namespace LD54.Floatables.Floes
 #endif
 
         private PlayerController _player;
-
+        private Coroutine _bounceRoutine;
         private void Start()
         {
             _player = FindFirstObjectByType<PlayerController>();
@@ -156,16 +156,33 @@ namespace LD54.Floatables.Floes
 
             // Impact
             float impact = iceberg.Weight * _tilesParent.childCount * GameManager.Instance.ProgressSpeed;
-
             DestroyInRadius(localCoords, 2 + Mathf.RoundToInt(impact * _obstacleImpactFactor));
 
+            // Geo Update
             StartCoroutine(DelayedGeoUpdate());
+            
+            // Bounce if not already bouncing
+            if(_bounceRoutine == null)
+                _bounceRoutine = StartCoroutine(Bounce(iceberg.transform));
 
 
-            IEnumerator Bounce()
+            IEnumerator Bounce(Transform collidedObject)
             {
+                Vector3 bounceDir = -1 * (collidedObject.position - transform.position);
+                float beta = 0f;
+
                 // Bounce the floe off the iceberg
-                yield return null;
+                while (beta < 1)
+                {
+                    // move character and floe away from obstacle
+                    
+                    transform.position += bounceDir * Time.deltaTime;
+                    _player.transform.localPosition += bounceDir * Time.deltaTime;
+                    yield return null;
+                    beta += Time.deltaTime;
+                }
+
+                _bounceRoutine = null;
             }
         }
 
