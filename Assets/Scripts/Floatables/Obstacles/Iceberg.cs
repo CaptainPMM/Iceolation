@@ -42,7 +42,7 @@ namespace LD54.Floatables.Obstacles
             float waveProbability = (2.5f + Weight*2.0f) * MoveSpeed * Time.deltaTime;
             if (Random.Range(0.0f, 1.0f) < waveProbability)
             {
-                Vector3 posOffset = new Vector3(0.0f, -0.0f, 0.0f);
+                Vector3 posOffset = new Vector3(Weight * 0.1f, -0.0f, 0.0f);
                 float duration = 1f / MoveSpeed + Weight*2.0f;
                 float size = 6.0f + Weight*4.0f;
                 GameManager.Instance.Ocean.CreateWave(
