@@ -220,3 +220,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StepPrefab: {fileID: 7476730758364306216, guid: 646118dac5eb8f9c6a12d9b9d17f1c04, type: 3}
+  StepContainer: {fileID: 0}
+  StepLifetime: 2
+  StepColorWithSunglasses: {r: 0.9528302, g: 0.3460751, b: 0.7497428, a: 0}

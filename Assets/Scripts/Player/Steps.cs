@@ -9,6 +9,7 @@ namespace LD54.Player
         public GameObject StepPrefab;
         public GameObject StepContainer;
         public float StepLifetime = 2.0f;
+        public Color StepColorWithSunglasses;
 
         public void StepEvent()
         {
@@ -52,6 +53,10 @@ namespace LD54.Player
             step.instance.transform.rotation = Quaternion.FromToRotation(wsPosition, directionLeft); // no clue why this works
             step.instance.GetComponent<SpriteRenderer>().material
                 .SetFloat("_Progress", step.progress);
+            if (_playerController.PlayerSunglassesVisible)
+            {
+                step.instance.GetComponent<SpriteRenderer>().material.SetColor("_Color", StepColorWithSunglasses);
+            }
 
             steps.Add(step);
         }
