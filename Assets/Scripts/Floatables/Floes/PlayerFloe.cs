@@ -10,11 +10,13 @@ namespace LD54.Floatables.Floes
     {
         [SerializeField] private Rigidbody2D _rb;
         [SerializeField] private CompositeCollider2D _col;
+        [SerializeField] private Transform _steeringAxisX;
         [SerializeField] private Transform _steeringAxisY;
         [SerializeField] private Transform _tilesParent;
 
         [Header("Settings")]
         [SerializeField] private Vector2 _moveSpeed = new(1f, 1f);
+        [SerializeField] private float _steeringAxisXDeadzone = 0.5f;
         [SerializeField] private float _steeringAxisYDeadzone = 0.5f;
         [SerializeField, Min(0f)] private float _obstacleImpactFactor = 0.03f;
 
@@ -41,13 +43,26 @@ namespace LD54.Floatables.Floes
             // Calc desired movement
             Vector3 cgToPlayer = _player.transform.position - transform.TransformPoint(_cg);
 
+            float playerSteeringXMoment = 0f;
+            if (Mathf.Abs(cgToPlayer.x) * 2f > _steeringAxisXDeadzone)
+                playerSteeringXMoment = _player.Weight * (Mathf.InverseLerp(-_col.bounds.extents.x, _col.bounds.extents.x, cgToPlayer.x) - 0.5f) * 2f;
+
             float playerSteeringYMoment = 0f;
             if (Mathf.Abs(cgToPlayer.y) * 2f > _steeringAxisYDeadzone)
                 playerSteeringYMoment = _player.Weight * (Mathf.InverseLerp(-_col.bounds.extents.y, _col.bounds.extents.y, cgToPlayer.y) - 0.5f) * 2f;
 
-            Vector3 movement = new Vector3(0f, playerSteeringYMoment, 0f) * _moveSpeed * Time.deltaTime; // no x movement for now
+            Vector3 movement = new Vector3(playerSteeringXMoment, playerSteeringYMoment, 0f) * _moveSpeed * Time.deltaTime;
 
-            // Check bounds (only y for now)
+            // Check bounds
+            if (movement.x >= 0f)
+            {
+                if (_col.bounds.max.x + movement.x > GameManager.Instance.GameViewBounds.x) movement.x = 0f;
+            }
+            else
+            {
+                if (_col.bounds.min.x + movement.x < -GameManager.Instance.GameViewBounds.x) movement.x = 0f;
+            }
+
             if (movement.y >= 0f)
             {
                 if (_col.bounds.max.y + movement.y > GameManager.Instance.GameViewBounds.y) movement.y = 0f;
@@ -95,6 +110,9 @@ namespace LD54.Floatables.Floes
                 summedPositions += col.transform.parent.localPosition;
             }
             _cg = summedPositions / cols.Length; // every tile has the same weight - otherwise multiply postions with weight and divide by total weight
+
+            _steeringAxisX.transform.localPosition = new Vector3(_cg.x, transform.InverseTransformPoint(_col.bounds.center).y, 0f);
+            _steeringAxisX.transform.localScale = new Vector3(_steeringAxisXDeadzone, _col.bounds.extents.y * 2f, 1f);
 
             _steeringAxisY.transform.localPosition = new Vector3(transform.InverseTransformPoint(_col.bounds.center).x, _cg.y, 0f);
             _steeringAxisY.transform.localScale = new Vector3(_col.bounds.extents.x * 2f, _steeringAxisYDeadzone, 1f);
@@ -174,7 +192,6 @@ namespace LD54.Floatables.Floes
                 }
             }
         }
-
 
         private void DestroyInRadius(Vector2 _normalizedHitPosition, int _radius)
         {
