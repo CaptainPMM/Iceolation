@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using LD54.Player;
 using LD54.Game;
+using LD54.Floatables.Obstacles;
 
 namespace LD54.Floatables.Floes
 {
@@ -99,6 +100,9 @@ namespace LD54.Floatables.Floes
                     if (!_player.PlayerSunglassesVisible) _player.PlayerSunglassesVisible = true;
                     Destroy(other.gameObject);
                     break;
+                case FloatableType.Obstacle:
+                    CollideObstacle(floatable as Iceberg);
+                    break;
             }
         }
 
@@ -132,6 +136,26 @@ namespace LD54.Floatables.Floes
                 yield return new WaitForFixedUpdate();
                 _col.GenerateGeometry(); // this method needs some delay...
                 CalcCG();
+            }
+        }
+
+        private void CollideObstacle(Iceberg iceberg)
+        {
+            // Hitpoint
+            Vector2 collisionPoint = _col.ClosestPoint(iceberg.transform.position);
+            Debug.Log($"Collision on point: {collisionPoint}");
+
+            // Impact
+            float impact = iceberg.Weight * _tilesParent.childCount * GameManager.Instance.ProgressSpeed;
+            Debug.Log($"Impact: {impact}");
+
+
+
+
+            IEnumerator Bounce()
+            {
+                // Bounce the floe off the iceberg
+                yield return null;
             }
         }
 
