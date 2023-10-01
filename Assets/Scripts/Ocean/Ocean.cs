@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using LD54.Game;
 using UnityEngine;
 
 namespace LD54.Ocean
@@ -43,6 +44,16 @@ namespace LD54.Ocean
             }
         }
 
+        private void Start()
+        {
+            this.transform.localScale = new Vector3(
+                GameManager.Instance.GameViewBounds.x * 2.1f,
+                GameManager.Instance.GameViewBounds.y * 2.1f,
+                1.0f
+            );
+            OnValidate();
+        }
+
         private void Update()
         {
             foreach (var wave in waveData)
@@ -61,7 +72,8 @@ namespace LD54.Ocean
 
         private void OnValidate()
         {
-            float shaderWaterSpeed = WaterSpeed * 0.5f;
+            float dflajl = GameManager.Instance ? 10.0f / GameManager.Instance.GameViewBounds.y : 1.0f;
+            float shaderWaterSpeed = WaterSpeed * 0.5f * dflajl;
             oceanMaterial.SetFloat("_Scroll_Speed", shaderWaterSpeed);
         }
 
