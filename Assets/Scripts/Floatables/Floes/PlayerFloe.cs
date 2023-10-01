@@ -3,7 +3,6 @@ using UnityEngine;
 using LD54.Player;
 using LD54.Game;
 using LD54.Floatables.Obstacles;
-using NUnit.Framework;
 
 namespace LD54.Floatables.Floes
 {
@@ -123,45 +122,25 @@ namespace LD54.Floatables.Floes
             floe.IsFloating = false;
             floe.transform.SetParent(_tilesParent);
 
-            float halfTileSize = floe.transform.localScale.x * 0.5f;
-            float sign = Mathf.Sign(floe.FloatSpeed); // floating left -> positive sign, floating right -> negative sign
-            Vector2 hitPos = transform.InverseTransformPoint(_col.ClosestPoint(floe.transform.position)); // needed later
-
-            floe.transform.localPosition = new Vector3(Mathf.RoundToInt(hitPos.x + halfTileSize * sign), Mathf.RoundToInt(hitPos.y), 0f);
-
-            // Check for wrong placement
-            RaycastHit2D rayHitHoriz = Physics2D.Raycast(floe.transform.position, Vector2.left * sign, floe.transform.localScale.x);
-            if (!rayHitHoriz.collider)
-            {
-                Vector2 rayHitVertDir = floe.transform.localPosition.y <= hitPos.y ? Vector2.up : Vector2.down;
-                RaycastHit2D rayHitVert = Physics2D.Raycast(floe.transform.position, rayHitVertDir, floe.transform.localScale.x);
-                if (!rayHitVert.collider) floe.transform.localPosition = new Vector3(floe.transform.localPosition.x - floe.transform.localScale.x * sign, floe.transform.localPosition.y, 0f);
-            }
+            SnapToGrid(_col.ClosestPoint(floe.transform.position), out _, out Vector2 localCoords, floe.FloatSpeed);
+            floe.transform.localPosition = localCoords;
 
             GameManager.Instance.Ocean.CreateWave(floe.transform.position, 0.5f, 3.5f, 1.5f);
 
             StartCoroutine(DelayedGeoUpdate());
-
-            IEnumerator DelayedGeoUpdate()
-            {
-                yield return new WaitForFixedUpdate();
-                yield return new WaitForFixedUpdate();
-                _col.GenerateGeometry(); // this method needs some delay...
-                CalcCG();
-            }
         }
 
         private void CollideObstacle(Iceberg iceberg)
         {
-            // Hitpoint
-            Vector2 collisionPoint = _col.ClosestPoint(iceberg.transform.position);
-            Debug.Log($"Collision on point: {collisionPoint}");
+            // Convert hitpoint to local space
+            SnapToGrid(_col.ClosestPoint(iceberg.transform.position), out _, out Vector2 localCoords, iceberg.MoveSpeed);          
 
             // Impact
             float impact = iceberg.Weight * _tilesParent.childCount * GameManager.Instance.ProgressSpeed;
-            Debug.Log($"Impact: {impact}");
+  
+            DestroyInRadius(localCoords, 3);
+            StartCoroutine(DelayedGeoUpdate());
 
-            DestroyInRadius(new Vector2(3, 1), 3);
 
             IEnumerator Bounce()
             {
@@ -169,6 +148,31 @@ namespace LD54.Floatables.Floes
                 yield return null;
             }
         }
+
+        private void SnapToGrid(Vector2 globalPos, out Vector2 globalCoords, out Vector2 localCoords, float floatDir = 1f)
+        {
+            Vector2 localPos = transform.InverseTransformPoint(globalPos);
+
+            float tileSize = _tilesParent.GetChild(0).transform.localScale.x;
+            float sign = Mathf.Sign(floatDir); // floating left -> positive sign, floating right -> negative sign
+
+            localCoords = new Vector2(Mathf.RoundToInt(localPos.x + tileSize * 0.5f * sign), Mathf.RoundToInt(localPos.y));
+            globalCoords = transform.TransformPoint(localCoords);
+
+            // Check for wrong placement
+            RaycastHit2D rayHitHoriz = Physics2D.Raycast(globalCoords, Vector2.left * sign, tileSize);
+            if (!rayHitHoriz.collider)
+            {
+                Vector2 rayHitVertDir = localCoords.y <= localPos.y ? Vector2.up : Vector2.down;
+                RaycastHit2D rayHitVert = Physics2D.Raycast(globalCoords, rayHitVertDir, tileSize);
+                if (!rayHitVert.collider)
+                {
+                    localCoords = new Vector2(localCoords.x - tileSize * sign, localCoords.y);
+                    globalCoords = transform.TransformPoint(localCoords);
+                }
+            }
+        }
+
 
         private void DestroyInRadius(Vector2 _normalizedHitPosition, int _radius)
         {
@@ -204,6 +208,14 @@ namespace LD54.Floatables.Floes
                 }
             }
             return null;
+        }
+
+        private IEnumerator DelayedGeoUpdate()
+        {
+            yield return new WaitForFixedUpdate();
+            yield return new WaitForFixedUpdate();
+            _col.GenerateGeometry(); // this method needs some delay...
+            CalcCG();
         }
 
 #if UNITY_EDITOR

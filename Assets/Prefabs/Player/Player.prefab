@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 518583526217587215}
   - component: {fileID: 1709869746917748881}
   - component: {fileID: 4666484803528450588}
+  - component: {fileID: 3383620141861178298}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -206,3 +207,16 @@ MonoBehaviour:
     m_Bits: 64
   speed: 3
   <Weight>k__BackingField: 1
+--- !u!114 &3383620141861178298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4029217623339156580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d7979480a4276ab9bd39ab4d73144c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StepPrefab: {fileID: 7476730758364306216, guid: 646118dac5eb8f9c6a12d9b9d17f1c04, type: 3}

@@ -185,6 +185,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6e5bd991dac7648458137c7233deffa7, type: 3}
+--- !u!1 &256419190 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5672823132296946051, guid: 6e5bd991dac7648458137c7233deffa7, type: 3}
+  m_PrefabInstance: {fileID: 256419189}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &358331212 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2009713927425399116, guid: cd69628bbdaf1cb4e9151683dd3a41d1, type: 3}
@@ -888,6 +893,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3383620141861178298, guid: a8278531a15e5614e93d0c0e70737ad0, type: 3}
+      propertyPath: StepContainer
+      value: 
+      objectReference: {fileID: 256419190}
     - target: {fileID: 4029217623339156580, guid: a8278531a15e5614e93d0c0e70737ad0, type: 3}
       propertyPath: m_Name
       value: Player
