@@ -320,6 +320,8 @@ MonoBehaviour:
   _steeringAxisXDeadzone: 0.5
   _steeringAxisYDeadzone: 0.5
   _obstacleImpactFactor: 0.03
+  _bounceDuration: 1
+  _bounceStrength: 3
   _cg: {x: -0.16666667, y: 0.33333334}
   _gizmosCGRadius: 0.2
 --- !u!50 &5602489639847091218
