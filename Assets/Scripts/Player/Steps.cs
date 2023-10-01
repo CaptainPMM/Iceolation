@@ -11,33 +11,33 @@ public class Steps : MonoBehaviour
 
     public void StepEvent()
     {
-        Vector2 direction = _playerController.MoveInput;
-        if (direction == Vector2.zero) direction = Vector2.down;
+        Vector2 directionForward = _playerController.MoveInput;
+        if (directionForward == Vector2.zero) directionForward = Vector2.down;
 
         left = !left;
 
         Vector2 footstepPosition = this.transform.position;
-        Vector2 directionRight = new (direction.y, -direction.x);
+        Vector2 directionLeft = new (-directionForward.y, directionForward.x);
 
         Vector2 footstepOffset = new(0.2f, 0.1f);
 
         if (left)
         {
-            footstepPosition -= directionRight * footstepOffset;
+            footstepPosition += directionLeft * footstepOffset;
         }
         else
         {
-            footstepPosition += directionRight * footstepOffset;
+            footstepPosition -= directionLeft * footstepOffset;
         }
 
-        CreateStep(footstepPosition);
+        CreateStep(footstepPosition, directionLeft);
     }
 
     private PlayerController _playerController;
     private bool left = false;
     private List<ActiveStep> steps = new();
 
-    private void CreateStep(Vector3 wsPosition)
+    private void CreateStep(Vector3 wsPosition, Vector2 directionLeft)
     {
         ActiveStep step = new()
         {
@@ -48,6 +48,7 @@ public class Steps : MonoBehaviour
 
         step.instance.transform.parent = StepContainer.transform;
         step.instance.transform.position = wsPosition;
+        step.instance.transform.rotation =  Quaternion.FromToRotation(wsPosition, directionLeft); // no clue why this works
         step.instance.GetComponent<SpriteRenderer>().material
             .SetFloat("_Progress", step.progress);
 
