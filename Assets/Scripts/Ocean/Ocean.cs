@@ -16,14 +16,17 @@ namespace LD54.Ocean
             CreateWave(new Vector2(2.0f, 2.0f), 10.0f, 3.0f);
         }
 
-        public void CreateWave(Vector2 worldPosition, float progress = 0.0f, float radius = 2.0f, float duration = 1.0f)
+        public void CreateWave(
+            Vector2 worldPosition, float progress = 0.0f, float radius = 2.0f,
+            float duration = 1.0f, float y_stretch = 1.0f
+        )
         {
             WaveData wave = new();
             wave.progress = progress;
             wave.duration = duration;
             wave.waveInstance = Instantiate(WavePrefab);
             wave.waveInstance.transform.position = worldPosition;
-            wave.waveInstance.transform.localScale = new Vector3(radius, radius, 1.0f);
+            wave.waveInstance.transform.localScale = new Vector3(radius, radius * y_stretch, 1.0f);
             wave.waveInstance.GetComponent<SpriteRenderer>().material
                 .SetFloat("_Pixels", radius * 15.0f); // one "pixel" is 15 pixels big
             wave.waveInstance.GetComponent<SpriteRenderer>().material

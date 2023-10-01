@@ -38,6 +38,15 @@ namespace LD54.Floatables.Obstacles
             {
                 Destroy(gameObject);
             }
+
+            float waveProbability = (2.5f + Weight) * MoveSpeed * Time.deltaTime;
+            if (Random.Range(0.0f, 1.0f) < waveProbability)
+            {
+                Vector3 posOffset = new Vector3(0.0f, -0.0f, 0.0f);
+                float duration = 1f / MoveSpeed + Weight;
+                float size = 6.0f + Weight*2.0f;
+                GameManager.Instance.Ocean.CreateWave(this.transform.position + posOffset, 0.2f, size, duration, 0.6f);
+            }
         }
     }
 }
