@@ -19,6 +19,8 @@ namespace LD54.Floatables.Floes
         [SerializeField] private float _steeringAxisXDeadzone = 0.5f;
         [SerializeField] private float _steeringAxisYDeadzone = 0.5f;
         [SerializeField, Min(0f)] private float _obstacleImpactFactor = 0.03f;
+        [SerializeField, Min(0f)] private float _bounceDuration = 1f;
+        [SerializeField, Min(0f)] private float _bounceStrength = 10f;
 
         [Header("State")]
         [SerializeField] private Vector2 _cg; // center of gravity in local space
@@ -160,26 +162,26 @@ namespace LD54.Floatables.Floes
 
             // Geo Update
             StartCoroutine(DelayedGeoUpdate());
-            
+
             // Bounce if not already bouncing
-            if(_bounceRoutine == null)
+            if (_bounceRoutine == null)
                 _bounceRoutine = StartCoroutine(Bounce(iceberg.transform));
 
 
             IEnumerator Bounce(Transform collidedObject)
             {
-                Vector3 bounceDir = -1 * (collidedObject.position - transform.position);
-                float beta = 0f;
+                Vector2 bounceDir = (transform.position - collidedObject.position).normalized;
+                float time = 0f;
 
                 // Bounce the floe off the iceberg
-                while (beta < 1)
+                while (time < _bounceDuration)
                 {
-                    // move character and floe away from obstacle
-                    
-                    transform.position += bounceDir * Time.deltaTime;
-                    _player.transform.localPosition += bounceDir * Time.deltaTime;
+                    Vector3 movement = (Vector3)(bounceDir * _moveSpeed * _bounceStrength * Mathf.InverseLerp(_bounceDuration, 0f, time) * Time.deltaTime);
+                    transform.position += movement;
+                    _player.transform.position += movement;
+
                     yield return null;
-                    beta += Time.deltaTime;
+                    time += Time.deltaTime;
                 }
 
                 _bounceRoutine = null;
