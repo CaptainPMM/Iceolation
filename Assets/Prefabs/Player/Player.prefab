@@ -200,5 +200,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rb: {fileID: 5246876230818234263}
+  _col: {fileID: 362286902286608184}
+  _playerFloeLayer:
+    serializedVersion: 2
+    m_Bits: 64
   speed: 3
   <Weight>k__BackingField: 1
