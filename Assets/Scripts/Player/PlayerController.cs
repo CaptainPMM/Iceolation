@@ -5,6 +5,10 @@ namespace LD54.Player
     public class PlayerController : MonoBehaviour
     {
         [SerializeField]
+        private Rigidbody2D _rb;
+        public Rigidbody2D RB => _rb;
+
+        [SerializeField]
         private float speed = 3f;
 
         [field: SerializeField] public float Weight { get; private set; } = 1f;
@@ -48,8 +52,7 @@ namespace LD54.Player
                 rbController.AddForce(rawInput * acceleration * 200f * Time.deltaTime);     // 200f = factor, so acceleration doesn't need to be 1000 but can be 5 instead
             */
 
-            moveDelta = new Vector3(moveInput.x, moveInput.y, 0).normalized * speed * Time.deltaTime;
-            transform.localPosition += moveDelta;
+            transform.position += new Vector3(moveInput.x, moveInput.y, 0f).normalized * speed * Time.deltaTime;
         }
     }
 }

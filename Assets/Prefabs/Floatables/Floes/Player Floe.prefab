@@ -229,7 +229,7 @@ MonoBehaviour:
   _col: {fileID: 311702360497502802}
   _steeringAxisY: {fileID: 9044469155359575856}
   _tilesParent: {fileID: 359803411959737272}
-  _moveSpeed: {x: 1, y: 10}
+  _moveSpeed: {x: 1, y: 3}
   _cg: {x: -0.3442623, y: -0.3442623}
   _gizmosCGRadius: 0.2
 --- !u!50 &5602489639847091218

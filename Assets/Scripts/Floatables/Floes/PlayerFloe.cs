@@ -36,7 +36,9 @@ namespace LD54.Floatables.Floes
         {
             Vector3 cgToPlayer = _player.transform.position - transform.TransformPoint(_cg);
             float playerSteeringMoment = _player.Weight * (Mathf.InverseLerp(-_col.bounds.extents.y, _col.bounds.extents.y, cgToPlayer.y) - 0.5f) * 2f;
-            _rb.MovePosition(_rb.position + new Vector2(0f, playerSteeringMoment) * _moveSpeed * Time.deltaTime); // no x movement for now
+            Vector3 movement = new Vector3(0f, playerSteeringMoment, 0f) * _moveSpeed * Time.deltaTime; // no x movement for now
+            transform.position += movement;
+            _player.transform.position += movement;
         }
 
         [ContextMenu("Calculate CG")]
