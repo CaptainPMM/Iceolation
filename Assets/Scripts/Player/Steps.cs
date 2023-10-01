@@ -53,7 +53,7 @@ namespace LD54.Player
             step.instance.transform.rotation = Quaternion.FromToRotation(wsPosition, directionLeft); // no clue why this works
             step.instance.GetComponent<SpriteRenderer>().material
                 .SetFloat("_Progress", step.progress);
-            if (_playerController.PlayerSunglassesVisible)
+            if (_playerController.HasSunglasses)
             {
                 step.instance.GetComponent<SpriteRenderer>().material.SetColor("_Color", StepColorWithSunglasses);
             }

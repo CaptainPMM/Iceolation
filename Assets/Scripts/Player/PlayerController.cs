@@ -26,16 +26,18 @@ namespace LD54.Player
 
         private Vector3 moveDelta;
 
-        private bool _playerSunglassesVisible;
-        public bool PlayerSunglassesVisible
+        private int _sunglassesCount;
+        public int SunglassesCount
         {
-            get => _playerSunglassesVisible;
+            get => _sunglassesCount;
             set
             {
-                _playerSunglassesVisible = value;
-                animController.SetFloat("hasSunglasses", value ? 1.0f : 0.0f);
+                _sunglassesCount = value;
+                animController.SetFloat("hasSunglasses", value > 0 ? 1.0f : 0.0f);
             }
         }
+
+        public bool HasSunglasses { get => _sunglassesCount > 0; }
 
         private void Start()
         {
