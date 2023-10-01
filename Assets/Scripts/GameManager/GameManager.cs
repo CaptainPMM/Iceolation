@@ -51,6 +51,7 @@ namespace LD54.Game
 
         public void EndGame(bool win)
         {
+            IsRunning = false;
             onGameEnded?.Invoke(win);
         }
     }
