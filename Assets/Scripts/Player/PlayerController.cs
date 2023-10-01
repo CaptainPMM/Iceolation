@@ -33,18 +33,28 @@ namespace LD54.Player
         private void OnEnable()
         {
             animController = GetComponent<Animator>();
-            InputManager.onMoveInput += OnMove;
+            GameManager.Instance.onGameStarted += AttachInput;
+            GameManager.Instance.onGameEnded += DetachInput;
         }
 
         private void OnDisable()
+        {
+            GameManager.Instance.onGameStarted -= AttachInput;
+            GameManager.Instance.onGameEnded -= DetachInput;
+        }
+
+        private void AttachInput()
+        {
+            InputManager.onMoveInput += OnMove;
+        }
+
+        private void DetachInput()
         {
             InputManager.onMoveInput -= OnMove;
         }
 
         private void OnMove(Vector2 rawInput)
         {
-            if(!GameManager.Instance.IsRunning) { return; }
-
             moveInput = rawInput;
 
             animController.SetFloat("moveX", moveInput.x);

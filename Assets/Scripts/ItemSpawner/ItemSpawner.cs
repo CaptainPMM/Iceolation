@@ -26,7 +26,17 @@ namespace LD54.ItemGenerator
         [SerializeField]
         private float floeProbability = 0.3f;
 
-        void Start()
+        private void Start()
+        {
+            GameManager.Instance.onGameStarted += StartItemSpawning;
+        }
+
+        private void OnDestroy()
+        {
+            GameManager.Instance.onGameStarted -= StartItemSpawning;
+        }
+
+        private void StartItemSpawning()
         {
             StartCoroutine(SpawnObjects());
         }

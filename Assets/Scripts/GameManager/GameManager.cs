@@ -5,6 +5,10 @@ namespace LD54.Game
 {
     public class GameManager : MonoBehaviour
     {
+        public delegate void OnGameStateUpdated();
+        public event OnGameStateUpdated onGameStarted;
+        public event OnGameStateUpdated onGameEnded;
+
         public static GameManager Instance { get; private set; }
 
         [field: SerializeField] public Vector2 GameViewBounds { get; private set; } = new(15f, 5f);
@@ -37,6 +41,7 @@ namespace LD54.Game
 
         public void StartGame()
         {
+            onGameStarted?.Invoke();
             StartCoroutine(StartProgress());
         }
     }

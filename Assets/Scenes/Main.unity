@@ -409,6 +409,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f9470ed552f4fd44aa6cf0efcc25484c, type: 3}
+--- !u!114 &1813253925 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4673483171445585251, guid: f9470ed552f4fd44aa6cf0efcc25484c, type: 3}
+  m_PrefabInstance: {fileID: 1657077418}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14157b7600fc30246b1a8069db10dfb7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1864572927
 GameObject:
   m_ObjectHideFlags: 0
@@ -711,9 +722,37 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8184764918269592906, guid: cd69628bbdaf1cb4e9151683dd3a41d1, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8184764918269592906, guid: cd69628bbdaf1cb4e9151683dd3a41d1, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8184764918269592906, guid: cd69628bbdaf1cb4e9151683dd3a41d1, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 1341226475}
+    - target: {fileID: 8184764918269592906, guid: cd69628bbdaf1cb4e9151683dd3a41d1, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 1813253925}
+    - target: {fileID: 8184764918269592906, guid: cd69628bbdaf1cb4e9151683dd3a41d1, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8184764918269592906, guid: cd69628bbdaf1cb4e9151683dd3a41d1, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: StartItemSpawning
+      objectReference: {fileID: 0}
+    - target: {fileID: 8184764918269592906, guid: cd69628bbdaf1cb4e9151683dd3a41d1, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
+      value: LD54.ItemGenerator.ItemSpawner, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8184764918269592906, guid: cd69628bbdaf1cb4e9151683dd3a41d1, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 8538787071449468221, guid: cd69628bbdaf1cb4e9151683dd3a41d1, type: 3}
       propertyPath: m_Name
       value: UICanvas
