@@ -51,7 +51,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _Number_Of_Waves: 5.11
-    - _Scroll_Speed: 1.5
+    - _Scroll_Speed: 0.75
     - _Wave_Chaoticness: 0.132
     - _Wave_Length: 0.418
     - _Wave_Width: 0.479
