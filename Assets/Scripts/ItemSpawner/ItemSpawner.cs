@@ -12,12 +12,6 @@ namespace LD54.ItemGenerator
         private List<GameObject> itemPrefabs = new();
 
         [SerializeField]
-        private Transform upperBound;
-
-        [SerializeField]
-        private Transform lowerBound;
-
-        [SerializeField]
         private float minTimeBetweenSpawns = 4f;
 
         [SerializeField]
@@ -45,7 +39,11 @@ namespace LD54.ItemGenerator
 
         private void SpawnObject()
         {
-            Vector3 spawnPosition = Vector3.Lerp(lowerBound.transform.position, upperBound.transform.position, Random.Range(0.0f, 1.0f));
+            Vector3 spawnPosition = new Vector3(
+                GameManager.Instance.GameViewBounds.x,
+                GameManager.Instance.GameViewBounds.y * Random.Range(-1.0f, 1.0f),
+                0f
+            );
             GameObject item = Instantiate(itemPrefabs[Random.Range(0, Mathf.FloorToInt(itemPrefabs.Count))], spawnPosition, Quaternion.identity);
 
             // Object specific initialization
