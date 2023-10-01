@@ -45,8 +45,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemPrefabs:
-  - {fileID: 1475971269492781323, guid: e610d13c597d549ff897ac20ef902d7e, type: 3}
   - {fileID: 8196508433031764401, guid: 31befe9f4c3410440bab77f880af5fa1, type: 3}
+  - {fileID: 1475971269492781323, guid: e610d13c597d549ff897ac20ef902d7e, type: 3}
   - {fileID: 143469806832641007, guid: e5923b3d606b9ab43bf928b8f8ee2f41, type: 3}
   minTimeBetweenSpawns: 4
   maxTimeBetweenSpawns: 12
+  collectableProbability: 0.05
+  floeProbability: 0.3
