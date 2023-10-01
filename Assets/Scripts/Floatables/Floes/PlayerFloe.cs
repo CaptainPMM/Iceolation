@@ -3,6 +3,7 @@ using UnityEngine;
 using LD54.Player;
 using LD54.Game;
 using LD54.Floatables.Obstacles;
+using NUnit.Framework;
 
 namespace LD54.Floatables.Floes
 {
@@ -160,14 +161,49 @@ namespace LD54.Floatables.Floes
             float impact = iceberg.Weight * _tilesParent.childCount * GameManager.Instance.ProgressSpeed;
             Debug.Log($"Impact: {impact}");
 
-
-
+            DestroyInRadius(new Vector2(3, 1), 3);
 
             IEnumerator Bounce()
             {
                 // Bounce the floe off the iceberg
                 yield return null;
             }
+        }
+
+        private void DestroyInRadius(Vector2 _normalizedHitPosition, int _radius)
+        {
+            // Traverse the square created by the radius in both x- and y- direction
+            for (int x = -_radius; x < _radius; x++)                                    // Change here to make hemisphere
+            {
+                for (int y = -_radius; y <= _radius; y++)
+                {
+                    // Check only in circle
+                    float distance_squared = x * x + y * y;                             // Used this in order not to use sqrt
+                    if (distance_squared < (float)_radius * (float)_radius)             // Only destroy tile if its inside the radius
+                    {
+                        GameObject tile = FindTile((int)_normalizedHitPosition.x + x,
+                        (int)_normalizedHitPosition.y + y)?.gameObject;                 // Try finding tile at this position
+
+                        // Destroy tile if it exists
+                        if (tile)
+                            Destroy(tile);
+                    }
+                }
+            }
+        }
+
+        // Try to find tile in position x,y
+        private Transform FindTile(int tileCoordX, int tileCoordY)
+        {
+            foreach(Transform tile in _tilesParent)
+            {
+                if(tile.localPosition.x == tileCoordX 
+                    && tile.localPosition.y == tileCoordY)
+                {
+                    return tile;
+                }
+            }
+            return null;
         }
 
 #if UNITY_EDITOR
