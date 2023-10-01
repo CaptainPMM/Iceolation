@@ -105,6 +105,8 @@ namespace LD54.Floatables.Floes
                 if (!rayHitVert.collider) floe.transform.localPosition = new Vector3(floe.transform.localPosition.x - floe.transform.localScale.x * sign, floe.transform.localPosition.y, 0f);
             }
 
+            GameManager.Instance.Ocean.CreateWave(floe.transform.position, 0.5f, 3.5f, 1.5f);
+
             StartCoroutine(DelayedGeoUpdate());
 
             IEnumerator DelayedGeoUpdate()

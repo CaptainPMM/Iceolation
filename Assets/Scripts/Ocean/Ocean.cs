@@ -16,10 +16,10 @@ namespace LD54.Ocean
             CreateWave(new Vector2(2.0f, 2.0f), 10.0f, 3.0f);
         }
 
-        public void CreateWave(Vector2 worldPosition, float radius = 2.0f, float duration = 1.0f)
+        public void CreateWave(Vector2 worldPosition, float progress = 0.0f, float radius = 2.0f, float duration = 1.0f)
         {
             WaveData wave = new();
-            wave.progress = 0.0f;
+            wave.progress = progress;
             wave.duration = duration;
             wave.waveInstance = Instantiate(WavePrefab);
             wave.waveInstance.transform.position = worldPosition;
@@ -63,7 +63,7 @@ namespace LD54.Ocean
                     .SetFloat("_Progress", wave.progress);
                 Vector3 position = wave.waveInstance.transform.position;
                 // looks better if the wave moves only with half the water speed
-                position.x += Time.deltaTime * WaterSpeed * 0.5f;
+                // position.x += Time.deltaTime * WaterSpeed * 0.5f; // actually looks better if the wave does not move
                 wave.waveInstance.transform.position = position;
                 if (wave.progress > 1.0f) Destroy(wave.waveInstance);
             }
