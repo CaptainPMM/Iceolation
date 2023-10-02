@@ -6,6 +6,7 @@ namespace LD54.Game
 {
     public class GameManager : MonoBehaviour
     {
+        public Restarter Restarter;
         public delegate void OnGameStateUpdated();
         public event OnGameStateUpdated onGameStarted;
         public delegate void OnGameEnded(bool win);
@@ -53,6 +54,7 @@ namespace LD54.Game
         {
             IsRunning = false;
             onGameEnded?.Invoke(win);
+            Restarter.gameObject.SetActive(true);
         }
     }
 }

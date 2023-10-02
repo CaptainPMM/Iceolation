@@ -64,5 +64,16 @@ namespace LD54.Player
                     isDirty = false;
             }
         }
+
+        private void OnDestroy()
+        {
+            if (onMoveInput != null)
+            {
+                foreach(var d in onMoveInput.GetInvocationList())
+                {
+                    onMoveInput -= (OnMoveInput) d;
+                }
+            }
+        }
     }
 }
