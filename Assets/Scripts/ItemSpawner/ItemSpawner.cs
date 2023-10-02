@@ -50,19 +50,21 @@ namespace LD54.ItemGenerator
             while (true)
             {
                 SpawnBorderObject();
-                yield return new WaitForSeconds(1.0f/(BorderObjectFrequency + Random.Range(-0.1f, 0.1f)));
+                yield return new WaitForSeconds(
+                    1.0f/(BorderObjectFrequency * GameManager.Instance.ProgressSpeed + Random.Range(-0.1f, 0.1f))
+                );
             }
         }
 
         private void SpawnBorderObject()
         {
-            SpawnBorderObject(GameManager.Instance.GameViewBounds.y + BorderUpperOffset + Random.Range(0f, 1.0f), true);
-            SpawnBorderObject(-GameManager.Instance.GameViewBounds.y - BorderLowerOffset - Random.Range(0f, 1.0f), false);
+            SpawnBorderObject(GameManager.Instance.GameViewBounds.y + BorderUpperOffset + Random.Range(0f, 0.25f), true);
+            SpawnBorderObject(-GameManager.Instance.GameViewBounds.y - BorderLowerOffset - Random.Range(0f, 0.25f), false);
         }
 
         private void SpawnBorderObject(float y, bool upper)
         {
-            Vector3 spawnPosition = new (GameManager.Instance.GameViewBounds.x, y, 0f);
+            Vector3 spawnPosition = new (GameManager.Instance.GameViewBounds.x + 1.0f, y, 0f);
 
             if (BorderObjectPrefabs.Length == 0)
             {
@@ -72,7 +74,6 @@ namespace LD54.ItemGenerator
             GameObject prefab = BorderObjectPrefabs[Random.Range(0, BorderObjectPrefabs.Length)];
 
             GameObject element = Instantiate(prefab, spawnPosition, Quaternion.identity);
-            element.GetComponent<Iceberg>().IsFloating = true;
             element.GetComponentInChildren<SpriteRenderer>().sortingOrder = upper ? 0 : 2;
             element.transform.parent = BordersContainer.transform;
         }

@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2782489693065225792}
   - component: {fileID: 6192926838732174346}
+  - component: {fileID: 6356331543069700169}
   m_Layer: 0
   m_Name: Border Sprite
   m_TagString: Untagged
@@ -84,3 +85,17 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &6356331543069700169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2121831177238727388}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 582cc3ce34a6bad079ec0a450531aaa0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Type>k__BackingField: 0
+  <MoveSpeed>k__BackingField: 1

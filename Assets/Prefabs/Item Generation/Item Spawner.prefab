@@ -44,12 +44,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14157b7600fc30246b1a8069db10dfb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BorderUpperOffset: -1
+  BorderUpperOffset: -0.58
   BorderLowerOffset: -0.5
   BorderObjectPrefabs:
-  - {fileID: 8196508433031764401, guid: a0c3c2e486824444c8e446557b216c10, type: 3}
+  - {fileID: 2121831177238727388, guid: 3b71f82a9dd8ae5e0b5c12291dff5dd6, type: 3}
   BordersContainer: {fileID: 0}
-  BorderObjectFrequency: 0.4
+  BorderObjectFrequency: 0.8
   spawnElements:
   - weight: 0.25
     value: {fileID: 8196508433031764401, guid: 9b2f4638f6bec4438aee3c4269c7f8e2, type: 3}

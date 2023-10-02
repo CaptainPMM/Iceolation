@@ -269,6 +269,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &982138323 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 656331940523969589, guid: 9051801261c5bc4a9ac16d25cd577a16, type: 3}
+  m_PrefabInstance: {fileID: 7552703232636982717}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1218693327 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3491217448692461821, guid: 1cb5bd8a6eba9a6688cfbb1966f9ea74, type: 3}
@@ -426,14 +431,14 @@ PrefabInstance:
     - target: {fileID: 4673483171445585251, guid: f9470ed552f4fd44aa6cf0efcc25484c, type: 3}
       propertyPath: BordersContainer
       value: 
+      objectReference: {fileID: 982138323}
+    - target: {fileID: 4673483171445585251, guid: f9470ed552f4fd44aa6cf0efcc25484c, type: 3}
+      propertyPath: BorderObjectFrequency
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4673483171445585251, guid: f9470ed552f4fd44aa6cf0efcc25484c, type: 3}
       propertyPath: collectableProbability
       value: 0.01
-      objectReference: {fileID: 0}
-    - target: {fileID: 4673483171445585251, guid: f9470ed552f4fd44aa6cf0efcc25484c, type: 3}
-      propertyPath: BorderObjectPrefabs.Array.size
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7736582775643464589, guid: f9470ed552f4fd44aa6cf0efcc25484c, type: 3}
       propertyPath: m_Name
