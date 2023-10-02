@@ -4,7 +4,6 @@ using UnityEngine;
 
 namespace LD54.Ocean
 {
-    [RequireComponent(typeof(SpriteRenderer))]
     public class Ocean : MonoBehaviour
     {
         public float WaterSpeed = 3.0f;
@@ -54,9 +53,11 @@ namespace LD54.Ocean
 
         private List<WaveData> waveData = new();
 
-        public SpriteRenderer OceanRenderer;
+        public SpriteRenderer OceanRenderer1;
+        public SpriteRenderer OceanRenderer2;
         public SpriteRenderer WavesRenderer;
-        private Material oceanMaterial { get { return OceanRenderer.sharedMaterial; } }
+        private Material oceanMaterial1 { get { return OceanRenderer1.sharedMaterial; } }
+        private Material oceanMaterial2 { get { return OceanRenderer2.sharedMaterial; } }
         private Material wavesMaterial { get { return WavesRenderer.sharedMaterial; } }
 
         private void Start()
@@ -89,7 +90,8 @@ namespace LD54.Ocean
         {
             float dflajl = GameManager.Instance ? 10.0f / GameManager.Instance.GameViewBounds.y : 1.0f;
             float shaderWaterSpeed = WaterSpeed * 0.5f * dflajl;
-            oceanMaterial.SetFloat("_Scroll_Speed", shaderWaterSpeed);
+            oceanMaterial1.SetFloat("_Scroll_Speed", shaderWaterSpeed);
+            oceanMaterial2.SetFloat("_Scroll_Speed", shaderWaterSpeed);
             wavesMaterial.SetFloat("_Scroll_Speed", shaderWaterSpeed);
         }
 
