@@ -967,10 +967,22 @@ PrefabInstance:
       propertyPath: StepContainer
       value: 
       objectReference: {fileID: 256419190}
+    - target: {fileID: 3440746646153047385, guid: a8278531a15e5614e93d0c0e70737ad0, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3735939578169645163, guid: a8278531a15e5614e93d0c0e70737ad0, type: 3}
+      propertyPath: StepContainer
+      value: 
+      objectReference: {fileID: 256419190}
     - target: {fileID: 4029217623339156580, guid: a8278531a15e5614e93d0c0e70737ad0, type: 3}
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 8551075900618040999, guid: a8278531a15e5614e93d0c0e70737ad0, type: 3}
+      propertyPath: StepContainer
+      value: 
+      objectReference: {fileID: 256419190}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

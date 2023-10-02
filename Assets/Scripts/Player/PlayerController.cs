@@ -1,6 +1,8 @@
 using System.Collections;
 using UnityEngine;
 using LD54.Game;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace LD54.Player
 {
@@ -9,6 +11,7 @@ namespace LD54.Player
         [SerializeField]
         private Rigidbody2D _rb;
         public Rigidbody2D RB => _rb;
+        private bool _facingLeft = false;
 
         [SerializeField]
         private CircleCollider2D _col;
@@ -24,29 +27,51 @@ namespace LD54.Player
 
         [field: SerializeField] public bool IsDrowning { get; private set; }
 
-        private int _sunglassesCount;
-        public int SunglassesCount
+        public Transform SunglassesContainer;
+        public Animator PlayerAnimController;
+        public Animator SunglassesAnimController;
+        public SpriteRenderer SunglassesSpriteRenderer;
+        public GameObject SunglassesPrefab;
+
+        public int SunglassesCount { get => _sunglassesCount; }
+        public bool HasSunglasses { get => _sunglassesCount > 0; }
+
+        [ContextMenu("Add Sunglasses")]
+        public void AddSunglasses()
         {
-            get => _sunglassesCount;
-            set
-            {
-                _sunglassesCount = value;
-                animController.SetFloat("hasSunglasses", value > 0 ? 1.0f : 0.0f);
-            }
+            GameObject instance = Instantiate(SunglassesPrefab);
+            instance.transform.parent = SunglassesContainer;
+            instance.transform.localPosition = new(0.0f, 0.0f, 0.0f);
+
+            SpriteRenderer renderer = instance.GetComponent<SpriteRenderer>();
+            sunglassesList.Add(new() { renderer = renderer, index = _sunglassesCount } );
+
+            _sunglassesCount++;
+
+            SyncSunglasses();
         }
 
-        public bool HasSunglasses { get => _sunglassesCount > 0; }
+        private int _sunglassesCount;
 
         private Vector2 moveInput;
         public Vector2 MoveInput { get { return moveInput; } }
 
         private (bool r, bool l, bool u, bool d) _movementRestrictions = new();
 
-        private Animator animController;
+        private List<Animator> animControllers = new();
+        private List<SunglassData> sunglassesList = new();
+
+        private class SunglassData
+        {
+            public SpriteRenderer renderer;
+            public int index;
+        }
 
         private void Start()
         {
-            animController = GetComponent<Animator>();
+            animControllers.Add(PlayerAnimController);
+            animControllers.Add(SunglassesAnimController);
+            SunglassesAnimController.SetFloat("hasSunglasses", 1.0f);
             GameManager.Instance.onGameStarted += AttachInput;
             GameManager.Instance.onGameEnded += DetachInput;
         }
@@ -77,6 +102,30 @@ namespace LD54.Player
             _movementRestrictions.d = !Physics2D.Raycast((Vector2)_col.bounds.center + Vector2.down * _col.radius, Vector2.down, 0.001f, _playerFloeLayer).collider;
 
             if (_movementRestrictions.r && _movementRestrictions.l && _movementRestrictions.u && _movementRestrictions.d) Drown();
+
+            SyncSunglasses();
+        }
+
+        private void SyncSunglasses()
+        {
+            foreach (var sunglasses in sunglassesList)
+            {
+                float offset;
+
+                if (_facingLeft)
+                {
+                    offset = sunglasses.index * -0.25f;
+                    sunglasses.renderer.sortingOrder = 100 - sunglasses.index;
+                }
+                else
+                {
+                    offset = sunglasses.index * 0.25f;
+                    sunglasses.renderer.sortingOrder = sunglasses.index + 1;
+                }
+
+                sunglasses.renderer.sprite = SunglassesSpriteRenderer.sprite;
+                sunglasses.renderer.transform.localPosition = new(offset, 0.0f, 0.0f);
+            }
         }
 
         private void OnMove(Vector2 rawInput)
@@ -85,8 +134,11 @@ namespace LD54.Player
 
             moveInput = rawInput;
 
-            animController.SetFloat("moveX", moveInput.x);
-            animController.SetFloat("moveY", moveInput.y);
+            foreach (var animController in animControllers)
+            {
+                animController.SetFloat("moveX", moveInput.x);
+                animController.SetFloat("moveY", moveInput.y);
+            }
 
             /*
             if (rbController.velocity.magnitude < maxVelocity)
@@ -124,6 +176,16 @@ namespace LD54.Player
                 GameManager.Instance.Ocean.CreateWave(transform.position + new Vector3(-1f, 0.5f, 0f), Random.Range(0f, 0.1f), Random.Range(2f, 6f), Random.Range(1f, 3f), 1f, Ocean.Ocean.Shape.Circular);
                 yield return new WaitForSeconds(Random.Range(0.1f, 0.2f));
             }
+        }
+
+        public void FaceLeft()
+        {
+            _facingLeft = true;
+        }
+
+        public void FaceRight()
+        {
+            _facingLeft = false;
         }
     }
 }

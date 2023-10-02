@@ -3,17 +3,18 @@ using UnityEngine;
 
 namespace LD54.Player
 {
-    [RequireComponent(typeof(PlayerController))]
     public class Steps : MonoBehaviour
     {
         public GameObject StepPrefab;
         public GameObject StepContainer;
+
+        public PlayerController PlayerController;
         public float StepLifetime = 2.0f;
         public Color StepColorWithSunglasses;
 
         public void StepEvent()
         {
-            Vector2 directionForward = _playerController.MoveInput;
+            Vector2 directionForward = PlayerController.MoveInput;
             if (directionForward == Vector2.zero) directionForward = Vector2.down;
 
             left = !left;
@@ -34,8 +35,6 @@ namespace LD54.Player
 
             CreateStep(footstepPosition, directionLeft);
         }
-
-        private PlayerController _playerController;
         private bool left = false;
         private List<ActiveStep> steps = new();
 
@@ -53,17 +52,12 @@ namespace LD54.Player
             step.instance.transform.rotation = Quaternion.FromToRotation(wsPosition, directionLeft); // no clue why this works
             step.instance.GetComponent<SpriteRenderer>().material
                 .SetFloat("_Progress", step.progress);
-            if (_playerController.HasSunglasses)
+            if (PlayerController.HasSunglasses)
             {
                 step.instance.GetComponent<SpriteRenderer>().material.SetColor("_Color", StepColorWithSunglasses);
             }
 
             steps.Add(step);
-        }
-
-        private void Awake()
-        {
-            _playerController = GetComponent<PlayerController>();
         }
 
         private void Update()

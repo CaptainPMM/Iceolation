@@ -151,7 +151,7 @@ namespace LD54.Floatables.Floes
                     AttachFloe(floatable as FloeTile);
                     break;
                 case FloatableType.Item:
-                    _player.SunglassesCount++;
+                    _player.AddSunglasses();
                     Destroy(other.gameObject);
                     break;
                 case FloatableType.Obstacle:
