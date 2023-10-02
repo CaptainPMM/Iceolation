@@ -1,5 +1,6 @@
 using System.Collections;
 using LD54.Ocean;
+using LD54.UI;
 using UnityEngine;
 
 namespace LD54.Game
@@ -7,6 +8,7 @@ namespace LD54.Game
     public class GameManager : MonoBehaviour
     {
         public Restarter Restarter;
+        public ScoreViewController ScoreViewController;
         public delegate void OnGameStateUpdated();
         public event OnGameStateUpdated onGameStarted;
         public delegate void OnGameEnded(bool win);

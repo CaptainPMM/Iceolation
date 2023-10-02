@@ -7,6 +7,8 @@ namespace LD54.UI
 {
     public class ScoreViewController : BaseViewController
     {
+        public void Add(int points) =>_score += points;
+
         [SerializeField]
         private TextMeshProUGUI _scoreText;
 

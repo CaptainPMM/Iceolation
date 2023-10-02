@@ -3,6 +3,7 @@ using UnityEngine;
 using LD54.Player;
 using LD54.Game;
 using LD54.Floatables.Obstacles;
+using LD54.Floatables.Items;
 
 namespace LD54.Floatables.Floes
 {
@@ -156,6 +157,7 @@ namespace LD54.Floatables.Floes
                     break;
                 case FloatableType.Item:
                     _player.AddSunglasses();
+                    GameManager.Instance.ScoreViewController.Add(other.gameObject.GetComponent<Sunglasses>().Score);
                     Destroy(other.gameObject);
                     break;
                 case FloatableType.Obstacle:

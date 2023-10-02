@@ -1,10 +1,13 @@
 using UnityEngine;
 using LD54.Game;
+using UnityEngine.SocialPlatforms.Impl;
 
 namespace LD54.Floatables.Items
 {
     public class Sunglasses : Floatable
     {
+        public int Score = 30;
+
         [field: Header("Settings")]
         [field: SerializeField] public float MoveSpeed { get; private set; } = 1f; // negative values move to the right
 
