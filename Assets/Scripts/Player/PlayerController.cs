@@ -94,6 +94,8 @@ namespace LD54.Player
 
         private void Update()
         {
+            SyncSunglasses();
+
             if (IsDrowning) return;
 
             _movementRestrictions.r = !Physics2D.Raycast((Vector2)_col.bounds.center + Vector2.right * _col.radius, Vector2.right, 0.001f, _playerFloeLayer).collider;
@@ -102,8 +104,6 @@ namespace LD54.Player
             _movementRestrictions.d = !Physics2D.Raycast((Vector2)_col.bounds.center + Vector2.down * _col.radius, Vector2.down, 0.001f, _playerFloeLayer).collider;
 
             if (_movementRestrictions.r && _movementRestrictions.l && _movementRestrictions.u && _movementRestrictions.d) Drown();
-
-            SyncSunglasses();
         }
 
         private void SyncSunglasses()
@@ -115,14 +115,13 @@ namespace LD54.Player
                 if (_facingLeft)
                 {
                     offset = sunglasses.index * -0.25f;
-                    sunglasses.renderer.sortingOrder = 100 - sunglasses.index;
                 }
                 else
                 {
                     offset = sunglasses.index * 0.25f;
-                    sunglasses.renderer.sortingOrder = sunglasses.index + 1;
                 }
 
+                sunglasses.renderer.sortingOrder = sunglasses.index + 1;
                 sunglasses.renderer.sprite = SunglassesSpriteRenderer.sprite;
                 sunglasses.renderer.transform.localPosition = new(offset, 0.0f, 0.0f);
             }
@@ -163,8 +162,10 @@ namespace LD54.Player
             IsDrowning = true;
             GameManager.Instance.EndGame(false);
 
-            Animator anim = GetComponent<Animator>();
-            anim.SetBool("drowning", true);
+            foreach (var anim in animControllers)
+            {
+                anim.SetBool("drowning", true);
+            }
 
             StartCoroutine(DrowningWavesRoutine());
         }
