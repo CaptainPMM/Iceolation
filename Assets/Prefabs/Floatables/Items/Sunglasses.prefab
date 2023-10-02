@@ -99,7 +99,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Type>k__BackingField: 4
-  <MoveSpeed>k__BackingField: 1
+  <MoveSpeed>k__BackingField: 1.5
+  _isFloating: 0
 --- !u!61 &7331939690388014460
 BoxCollider2D:
   m_ObjectHideFlags: 0

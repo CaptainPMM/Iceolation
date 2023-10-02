@@ -53,13 +53,13 @@ MonoBehaviour:
   spawnElements:
   - weight: 0.25
     value: {fileID: 8196508433031764401, guid: 9b2f4638f6bec4438aee3c4269c7f8e2, type: 3}
-  - weight: 0.2
+  - weight: 0.3
     value: {fileID: 8196508433031764401, guid: 8a966bc88c50043cd897d3718904dd3f, type: 3}
   - weight: 0.15
     value: {fileID: 8196508433031764401, guid: 31befe9f4c3410440bab77f880af5fa1, type: 3}
-  - weight: 0.35
+  - weight: 0.2
     value: {fileID: 1475971269492781323, guid: e610d13c597d549ff897ac20ef902d7e, type: 3}
-  - weight: 0.05
+  - weight: 0.1
     value: {fileID: 143469806832641007, guid: e5923b3d606b9ab43bf928b8f8ee2f41, type: 3}
   minTimeBetweenSpawns: 2
   maxTimeBetweenSpawns: 8
