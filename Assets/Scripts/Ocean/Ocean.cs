@@ -54,15 +54,10 @@ namespace LD54.Ocean
 
         private List<WaveData> waveData = new();
 
-        private SpriteRenderer srr;
-        private Material oceanMaterial
-        {
-            get
-            {
-                if (srr == null) srr = GetComponent<SpriteRenderer>();
-                return srr.sharedMaterial;
-            }
-        }
+        public SpriteRenderer OceanRenderer;
+        public SpriteRenderer WavesRenderer;
+        private Material oceanMaterial { get { return OceanRenderer.sharedMaterial; } }
+        private Material wavesMaterial { get { return WavesRenderer.sharedMaterial; } }
 
         private void Start()
         {
@@ -95,6 +90,7 @@ namespace LD54.Ocean
             float dflajl = GameManager.Instance ? 10.0f / GameManager.Instance.GameViewBounds.y : 1.0f;
             float shaderWaterSpeed = WaterSpeed * 0.5f * dflajl;
             oceanMaterial.SetFloat("_Scroll_Speed", shaderWaterSpeed);
+            wavesMaterial.SetFloat("_Scroll_Speed", shaderWaterSpeed);
         }
 
         private class WaveData

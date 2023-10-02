@@ -126,6 +126,34 @@ void ocean_float(
 	float x = screen_position.x * number_of_waves;
 
 	uint seed = 0x578437adU;
+	float2 noise_coord = float2(x, screen_position.y * number_of_waves);
+	noise_coord.x += time * scroll_speed / 5;
+	noise_coord.x /= 10;
+	float perlin_noise_4 = perlinNoise(noise_coord, 4, 3, 0.5, 2.0, seed);
+
+	if (perlin_noise_4 > 0.5) out_color = background_color*0.4;
+	else if (perlin_noise_4 > 0) out_color = background_color*0.6;
+	else out_color = background_color;
+}
+
+void ocean_waves_float(
+	float2 screen_position, float time, float number_of_waves,
+	float wave_length, float wave_width, float wave_chaoticness,
+	float scroll_speed, float3 background_color, float3 wave_color,
+	out float3 out_color, out float out_alpha
+) {
+	float ratio = 16.0/9.0;
+	screen_position.x = 1 - screen_position.x;
+	screen_position.x *= ratio;
+    screen_position *= 2;
+	screen_position.x += + scroll_speed/number_of_waves * time;
+	screen_position *= 150;
+	screen_position = floor(screen_position);
+	float2 pixel_grid = screen_position;
+	screen_position /= 150;
+	float x = screen_position.x * number_of_waves;
+
+	uint seed = 0x578437adU;
 	float noise_frequency = 1;
 	float2 noise_coord = float2(x, screen_position.y * number_of_waves);
 	noise_coord.x += time * 0.1;
@@ -154,16 +182,10 @@ void ocean_float(
 	intensity = lerp(0, intensity, smoothstep(0,0.5,wave_mask));
 	intensity = clamp(intensity, 0, 1);
 
-	out_color = intensity;
-	out_color.gb *= fmod(wave_id,2);
-
-	if (perlin_noise_4 > 0.5) out_color = background_color*0.4;
-	else if (perlin_noise_4 > 0) out_color = background_color*0.6;
-	else out_color = background_color;
-
 	float4 shading = get_shaded_waves(pixel_grid, intensity, wave_color);
 
-	out_color = lerp(out_color, shading, shading.a);
+	out_color = shading;
+	out_alpha = shading.a;
 }
 
 void wave_float(
