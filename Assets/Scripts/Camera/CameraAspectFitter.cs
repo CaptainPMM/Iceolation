@@ -13,7 +13,17 @@ namespace LD54.Camera
         // Update is called once per frame
         void Start()
         {
-            StartCoroutine(UpdateScreenAspectRatio());
+            StartCoroutine(RegularlyUpdateScreenAspectRatio());
+        }
+
+        private IEnumerator RegularlyUpdateScreenAspectRatio()
+        {
+            while (true)
+            {
+                StartCoroutine(UpdateScreenAspectRatio());
+                StartCoroutine(UpdateScreenAspectRatio());
+                yield return new WaitForSecondsRealtime(1.0f);
+            }
         }
 
         private IEnumerator UpdateScreenAspectRatio()
