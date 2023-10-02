@@ -33,6 +33,7 @@ namespace LD54.Floatables.Floes
 
         private PlayerController _player;
         private Coroutine _bounceRoutine;
+
         private void Start()
         {
             _player = FindFirstObjectByType<PlayerController>();
@@ -43,6 +44,8 @@ namespace LD54.Floatables.Floes
 
         private void Update()
         {
+            if (_player.IsDrowning) return;
+
             // Calc desired movement
             Vector3 cgToPlayer = _player.transform.position - transform.TransformPoint(_cg);
 
@@ -118,6 +121,13 @@ namespace LD54.Floatables.Floes
                 }
                 summedPositions += col.transform.parent.localPosition;
             }
+
+            if (cols.Length - numDestroyed <= 0)
+            {
+                _cg = Vector2.zero;
+                return;
+            }
+
             _cg = summedPositions / (cols.Length - numDestroyed); // every tile has the same weight - otherwise multiply postions with weight and divide by total weight
 
             _steeringAxisX.transform.localPosition = new Vector3(_cg.x, transform.InverseTransformPoint(_col.bounds.center).y, 0f);
@@ -195,7 +205,7 @@ namespace LD54.Floatables.Floes
                     }
                     
                     transform.position += movement;
-                    _player.transform.position += movement;
+                    if (!_player.IsDrowning) _player.transform.position += movement;
 
                     yield return null;
                     time += Time.deltaTime;
@@ -231,7 +241,6 @@ namespace LD54.Floatables.Floes
 
         private void DestroyInRadius(Vector2 _normalizedHitPosition, int _radius)
         {
-            int childCount = _tilesParent.childCount;
             // Traverse the square created by the radius in both x- and y- direction
             for (int x = -_radius; x < _radius; x++)                                    // Change here to make hemisphere
             {
@@ -248,18 +257,9 @@ namespace LD54.Floatables.Floes
                         if (tile)
                         {
                             tile.GetComponent<FloeTile>().AnimatedDestroy();
-                            childCount--;
                         }
                     }
                 }
-            }
-
-            if (childCount <= 0)
-            {
-                // Loose condition
-                GameManager.Instance.EndGame(false);
-                Destroy(gameObject);
-                Destroy(_player.gameObject);
             }
         }
 
