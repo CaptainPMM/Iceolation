@@ -19,7 +19,7 @@ namespace LD54.Floatables.Floes
         [SerializeField] private Vector2 _moveSpeed = new(1f, 1f);
         [SerializeField] private float _steeringAxisXDeadzone = 0.5f;
         [SerializeField] private float _steeringAxisYDeadzone = 0.5f;
-        [SerializeField, Min(0f)] private float _obstacleImpactFactor = 0.03f;
+        // [SerializeField, Min(0f)] private float _obstacleImpactFactor = 0.03f;
         [SerializeField, Min(0f)] private float _bounceDuration = 1f;
         [SerializeField, Min(0f)] private float _bounceStrength = 10f;
 
@@ -32,6 +32,8 @@ namespace LD54.Floatables.Floes
 #endif
 
         private PlayerController _player;
+
+        private bool _geoUpdateThisFrame;
         private Coroutine _bounceRoutine;
 
         private void Start()
@@ -44,6 +46,8 @@ namespace LD54.Floatables.Floes
 
         private void Update()
         {
+            _geoUpdateThisFrame = false;
+
             if (_player.IsDrowning) return;
 
             // Calc desired movement
@@ -170,7 +174,7 @@ namespace LD54.Floatables.Floes
 
             GameManager.Instance.Ocean.CreateWave(floe.transform.position, 0.5f, 3.5f, 1.5f);
 
-            StartCoroutine(DelayedGeoUpdate());
+            DelayedGeoUpdate();
         }
 
         private void CollideObstacle(Iceberg iceberg)
@@ -181,13 +185,8 @@ namespace LD54.Floatables.Floes
             // Impact
             DestroyInRadius(localCoords, 1 + iceberg.DestructionTileRadius);
 
-            // Geo Update
-            StartCoroutine(DelayedGeoUpdate());
-
-            // Bounce if not already bouncing
-            if (_bounceRoutine == null)
-                _bounceRoutine = StartCoroutine(Bounce(iceberg.transform));
-
+            if (_bounceRoutine != null) StopCoroutine(_bounceRoutine);
+            _bounceRoutine = StartCoroutine(Bounce(iceberg.transform));
 
             IEnumerator Bounce(Transform collidedObject)
             {
@@ -260,7 +259,8 @@ namespace LD54.Floatables.Floes
                         // Destroy tile if it exists
                         if (tile)
                         {
-                            tile.GetComponent<FloeTile>().AnimatedDestroy();
+                            tile.GetComponent<FloeTile>().AnimatedDestroy(out float delay);
+                            DelayedGeoUpdate(delay);
                         }
                     }
                 }
@@ -281,10 +281,21 @@ namespace LD54.Floatables.Floes
             return null;
         }
 
-        private IEnumerator DelayedGeoUpdate()
+        private void DelayedGeoUpdate(float delay = -1)
         {
+            StartCoroutine(DelayedGeoUpdateRoutine(delay));
+        }
+
+        private IEnumerator DelayedGeoUpdateRoutine(float delay = -1f)
+        {
+            if (delay > 0f) yield return new WaitForSeconds(delay);
+
             yield return new WaitForFixedUpdate();
             yield return new WaitForFixedUpdate();
+
+            if (_geoUpdateThisFrame) yield break;
+            _geoUpdateThisFrame = true;
+
             _col.GenerateGeometry(); // this method needs some delay...
             CalcCG();
         }
