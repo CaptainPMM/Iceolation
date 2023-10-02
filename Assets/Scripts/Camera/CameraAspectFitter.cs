@@ -11,19 +11,9 @@ namespace LD54.Camera
         [SerializeField]
         private Vector2 referenceResolution = new Vector2(1920, 1080);
         // Update is called once per frame
-        void Start()
+        void Update()
         {
-            StartCoroutine(RegularlyUpdateScreenAspectRatio());
-        }
-
-        private IEnumerator RegularlyUpdateScreenAspectRatio()
-        {
-            while (true)
-            {
-                StartCoroutine(UpdateScreenAspectRatio());
-                StartCoroutine(UpdateScreenAspectRatio());
-                yield return new WaitForSecondsRealtime(1.0f);
-            }
+            StartCoroutine(UpdateScreenAspectRatio());
         }
 
         private IEnumerator UpdateScreenAspectRatio()
