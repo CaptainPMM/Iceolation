@@ -6,6 +6,7 @@ namespace LD54.Floatables.Floes
     public class FloeTile : Floatable
     {
         [SerializeField] private BoxCollider2D _col;
+        [SerializeField] private GameObject _botSprite;
 
         [field: Header("Settings")]
         [field: SerializeField] public float FloatSpeed { get; private set; } = 1f; // negative values float to the right
@@ -72,6 +73,7 @@ namespace LD54.Floatables.Floes
                 this.transform.position + posOffset, 0.0f, size, duration, 1.0f, Ocean.Ocean.Shape.Circular
             );
 
+            Destroy(_botSprite, anim.GetCurrentAnimatorClipInfo(0)[0].clip.length - 0.33f);
             Destroy(gameObject, anim.GetCurrentAnimatorClipInfo(0)[0].clip.length);
         }
 
