@@ -83,22 +83,27 @@ namespace LD54.Floatables.Floes
             _player.transform.position += movement;
 
             // spawn some waves on the side the floe is "tilted"
-            // playerSteeringMoment (down,up) [-1;1]
+            Vector2 playerSteeringMoment = new(playerSteeringXMoment, playerSteeringYMoment);
+            // playerSteeringMoment.x (left,right) [-1;1]
+            // playerSteeringMoment.y (down,up) [-1;1]
             foreach (Transform tile in _tilesParent)
             {
-                float cgDirection = tile.localPosition.y - _cg.y;
+                Vector2 cgDirection = (Vector2) tile.localPosition - _cg;
 
-                float baseChance = 0.05f;
-                float waveProbabilityPerFloe = baseChance;
-                if (cgDirection * playerSteeringYMoment >= 0.0f)
+                float baseChance = 0.10f;
+                float waveProbability = baseChance; // probability of a wave per second
+                
+                if (Vector2.Dot(cgDirection, playerSteeringMoment) >= 0.0f)
                 {
                     // tile is at the side the floe is moving towards
                     // the more the floe is tilted the higher the probability of a wave
-                    waveProbabilityPerFloe += Mathf.Abs(playerSteeringYMoment) * Mathf.Abs(cgDirection) + baseChance;
+                    float tiltedNess = playerSteeringMoment.magnitude;
+                        // = Mathf.Abs(playerSteeringMoment.y) + Mathf.Abs(playerSteeringMoment.x);
+                    waveProbability += tiltedNess * cgDirection.magnitude;
                 }
-                waveProbabilityPerFloe *= Time.deltaTime;
+                waveProbability *= Time.deltaTime;
 
-                if (Random.Range(0.0f, 1.0f) < waveProbabilityPerFloe)
+                if (Random.Range(0.0f, 1.0f) < waveProbability)
                 {
                     Vector3 posOffset = new Vector3(0.0f, -0.25f, 0.0f);
                     GameManager.Instance.Ocean.CreateWave(tile.position + posOffset, 0.6f, 4.0f, 1.5f);
