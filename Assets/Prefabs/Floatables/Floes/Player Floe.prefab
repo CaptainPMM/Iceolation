@@ -311,6 +311,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Type>k__BackingField: 1
+  BorderBoundsOffset: 1
   _rb: {fileID: 5602489639847091218}
   _col: {fileID: 612904689848456110}
   _steeringAxisX: {fileID: 6901104213111217571}

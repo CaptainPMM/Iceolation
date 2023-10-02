@@ -8,6 +8,7 @@ namespace LD54.Floatables.Floes
 {
     public class PlayerFloe : Floatable
     {
+        public float BorderBoundsOffset = 1.0f;
         [SerializeField] private Rigidbody2D _rb;
         [SerializeField] private CompositeCollider2D _col;
         [SerializeField] private Transform _steeringAxisX;
@@ -67,11 +68,11 @@ namespace LD54.Floatables.Floes
 
             if (movement.y >= 0f)
             {
-                if (_col.bounds.max.y + movement.y > GameManager.Instance.GameViewBounds.y) movement.y = 0f;
+                if (_col.bounds.max.y + movement.y > GameManager.Instance.GameViewBounds.y - BorderBoundsOffset) movement.y = 0f;
             }
             else
             {
-                if (_col.bounds.min.y + movement.y < -GameManager.Instance.GameViewBounds.y) movement.y = 0f;
+                if (_col.bounds.min.y + movement.y < -GameManager.Instance.GameViewBounds.y + BorderBoundsOffset) movement.y = 0f;
             }
 
             // Move result
@@ -183,6 +184,16 @@ namespace LD54.Floatables.Floes
                 while (time < _bounceDuration)
                 {
                     Vector3 movement = (Vector3)(bounceDir * _moveSpeed * _bounceStrength * Mathf.InverseLerp(_bounceDuration, 0f, time) * Time.deltaTime);
+                    
+                    if (movement.y >= 0f)
+                    {
+                        if (_col.bounds.max.y + movement.y > GameManager.Instance.GameViewBounds.y - BorderBoundsOffset) movement.y = 0f;
+                    }
+                    else
+                    {
+                        if (_col.bounds.min.y + movement.y < -GameManager.Instance.GameViewBounds.y + BorderBoundsOffset) movement.y = 0f;
+                    }
+                    
                     transform.position += movement;
                     _player.transform.position += movement;
 

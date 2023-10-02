@@ -96,7 +96,7 @@ namespace LD54.ItemGenerator
         {
             Vector3 spawnPosition = new Vector3(
                 GameManager.Instance.GameViewBounds.x,
-                GameManager.Instance.GameViewBounds.y * Random.Range(-1f, 1f),
+                GameManager.Instance.GameViewBounds.y * Random.Range(-0.8f, 0.7f),
                 0f
             );
 
