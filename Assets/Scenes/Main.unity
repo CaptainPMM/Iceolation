@@ -440,6 +440,14 @@ PrefabInstance:
       propertyPath: collectableProbability
       value: 0.01
       objectReference: {fileID: 0}
+    - target: {fileID: 4673483171445585251, guid: f9470ed552f4fd44aa6cf0efcc25484c, type: 3}
+      propertyPath: spawnElements.Array.data[1].weight
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 4673483171445585251, guid: f9470ed552f4fd44aa6cf0efcc25484c, type: 3}
+      propertyPath: spawnElements.Array.data[4].weight
+      value: 0.15
+      objectReference: {fileID: 0}
     - target: {fileID: 7736582775643464589, guid: f9470ed552f4fd44aa6cf0efcc25484c, type: 3}
       propertyPath: m_Name
       value: Item Spawner
