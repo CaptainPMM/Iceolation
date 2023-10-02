@@ -58,11 +58,8 @@ namespace LD54.Floatables.Floes
             }
         }
 
-        public void AnimatedDestroy()
+        public void AnimatedDestroy(out float tileDestroyedDelay)
         {
-            _col.gameObject.layer = LayerMask.NameToLayer("Player Floe");
-            _col.compositeOperation = Collider2D.CompositeOperation.None;
-
             Animator anim = GetComponentInChildren<Animator>();
             anim.enabled = true;
 
@@ -73,8 +70,11 @@ namespace LD54.Floatables.Floes
                 this.transform.position + posOffset, 0.0f, size, duration, 1.0f, Ocean.Ocean.Shape.Circular
             );
 
-            Destroy(_botSprite, anim.GetCurrentAnimatorClipInfo(0)[0].clip.length - 0.33f);
-            Destroy(gameObject, anim.GetCurrentAnimatorClipInfo(0)[0].clip.length);
+            float animLength = anim.GetCurrentAnimatorClipInfo(0)[0].clip.length;
+            Destroy(_botSprite, animLength - 0.33f);
+            Destroy(gameObject, animLength);
+
+            tileDestroyedDelay = animLength;
         }
 
 #if UNITY_EDITOR
