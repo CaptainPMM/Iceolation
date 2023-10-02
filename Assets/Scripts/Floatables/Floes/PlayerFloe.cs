@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using LD54.Player;
 using LD54.Game;
@@ -15,6 +16,7 @@ namespace LD54.Floatables.Floes
         [SerializeField] private Transform _steeringAxisX;
         [SerializeField] private Transform _steeringAxisY;
         [SerializeField] private Transform _tilesParent;
+        [SerializeField] private LayerMask _playerFloeLayer;
 
         [Header("Settings")]
         [SerializeField] private Vector2 _moveSpeed = new(1f, 1f);
@@ -93,17 +95,17 @@ namespace LD54.Floatables.Floes
             // playerSteeringMoment.y (down,up) [-1;1]
             foreach (Transform tile in _tilesParent)
             {
-                Vector2 cgDirection = (Vector2) tile.localPosition - _cg;
+                Vector2 cgDirection = (Vector2)tile.localPosition - _cg;
 
                 float baseChance = 0.10f;
                 float waveProbability = baseChance; // probability of a wave per second
-                
+
                 if (Vector2.Dot(cgDirection, playerSteeringMoment) >= 0.0f)
                 {
                     // tile is at the side the floe is moving towards
                     // the more the floe is tilted the higher the probability of a wave
                     float tiltedNess = playerSteeringMoment.magnitude;
-                        // = Mathf.Abs(playerSteeringMoment.y) + Mathf.Abs(playerSteeringMoment.x);
+                    // = Mathf.Abs(playerSteeringMoment.y) + Mathf.Abs(playerSteeringMoment.x);
                     waveProbability += tiltedNess * cgDirection.magnitude;
                 }
                 waveProbability *= Time.deltaTime;
@@ -168,6 +170,8 @@ namespace LD54.Floatables.Floes
 
         private void AttachFloe(FloeTile floe)
         {
+            if (floe.WasDetached) return;
+
             floe.IsFloating = false;
             floe.transform.SetParent(_tilesParent);
 
@@ -175,6 +179,15 @@ namespace LD54.Floatables.Floes
             floe.transform.localPosition = localCoords;
 
             GameManager.Instance.Ocean.CreateWave(floe.transform.position, 0.5f, 3.5f, 1.5f);
+
+            DelayedGeoUpdate();
+        }
+
+        private void DetachFloe(FloeTile floe)
+        {
+            floe.WasDetached = true;
+            floe.transform.SetParent(null);
+            floe.IsFloating = true;
 
             DelayedGeoUpdate();
         }
@@ -300,6 +313,130 @@ namespace LD54.Floatables.Floes
 
             _col.GenerateGeometry(); // this method needs some delay...
             CalcCG();
+            DetachIslands();
+        }
+
+        private void DetachIslands()
+        {
+            // Get maximum grid coordinates of the floe (in a weird way - but its too late)
+            int maxX = int.MinValue;
+            int maxY = int.MinValue;
+
+            int minX = int.MaxValue;
+            int minY = int.MaxValue;
+
+            foreach (Transform tile in _tilesParent)
+            {
+                if (tile.localPosition.x > maxX) maxX = (int)tile.localPosition.x;
+                if (tile.localPosition.y > maxY) maxY = (int)tile.localPosition.y;
+                if (tile.localPosition.x < minX) minX = (int)tile.localPosition.x;
+                if (tile.localPosition.y < minY) minY = (int)tile.localPosition.y;
+            }
+
+            Vector2 rightAnchor = transform.position + Vector3.right * maxX;
+            Vector2 topAnchor = transform.position + Vector3.up * maxY;
+
+            List<int> sliceCandidatesX = new();
+            bool lastCollisionX = true;
+            for (int x = minX + 1; x < maxX; x++)
+            {
+                bool collision = Physics2D.Raycast(topAnchor + Vector2.right * x, Vector2.down, maxY - minY, _playerFloeLayer).collider;
+                if (collision != lastCollisionX)
+                {
+                    sliceCandidatesX.Add(collision ? x - 1 : x);
+                }
+                lastCollisionX = collision;
+            }
+
+            List<int> sliceCandidatesY = new();
+            bool lastCollisionY = true;
+            for (int y = minY + 1; y < maxY; y++)
+            {
+                bool collision = Physics2D.Raycast(rightAnchor + Vector2.up * y, Vector2.left, maxX - minX, _playerFloeLayer).collider;
+                if (collision != lastCollisionY)
+                {
+                    sliceCandidatesY.Add(collision ? y - 1 : y);
+                }
+                lastCollisionY = collision;
+            }
+
+            if (sliceCandidatesX.Count > 0)
+            {
+                float playerX = transform.InverseTransformPoint(_player.transform.position).x;
+
+                float nearestSliceCandidateDistRight = float.MaxValue;
+                int? nearestSliceCandidateRight = null;
+                float nearestSliceCandidateDistLeft = float.MaxValue;
+                int? nearestSliceCandidateLeft = null;
+                foreach (int sliceCandidateX in sliceCandidatesX)
+                {
+                    float dist = Mathf.Abs(sliceCandidateX - playerX);
+                    if (sliceCandidateX >= playerX)
+                    {
+                        if (dist < nearestSliceCandidateDistRight)
+                        {
+                            nearestSliceCandidateDistRight = dist;
+                            nearestSliceCandidateRight = sliceCandidateX;
+                        }
+                    }
+                    else
+                    {
+                        if (dist < nearestSliceCandidateDistLeft)
+                        {
+                            nearestSliceCandidateDistLeft = dist;
+                            nearestSliceCandidateLeft = sliceCandidateX;
+                        }
+                    }
+                }
+
+                foreach (Transform tile in _tilesParent.transform)
+                {
+                    if (nearestSliceCandidateRight != null && tile.localPosition.x >= nearestSliceCandidateRight
+                     || nearestSliceCandidateLeft != null && tile.localPosition.x <= nearestSliceCandidateLeft)
+                    {
+                        DetachFloe(tile.GetComponent<FloeTile>());
+                    }
+                }
+            }
+
+            if (sliceCandidatesY.Count > 0)
+            {
+                float playerY = transform.InverseTransformPoint(_player.transform.position).y;
+
+                float nearestSliceCandidateDistAbove = float.MaxValue;
+                int? nearestSliceCandidateAbove = null;
+                float nearestSliceCandidateDistBelow = float.MaxValue;
+                int? nearestSliceCandidateBelow = null;
+                foreach (int sliceCandidateY in sliceCandidatesY)
+                {
+                    float dist = Mathf.Abs(sliceCandidateY - playerY);
+                    if (sliceCandidateY >= playerY)
+                    {
+                        if (dist < nearestSliceCandidateDistAbove)
+                        {
+                            nearestSliceCandidateDistAbove = dist;
+                            nearestSliceCandidateAbove = sliceCandidateY;
+                        }
+                    }
+                    else
+                    {
+                        if (dist < nearestSliceCandidateDistBelow)
+                        {
+                            nearestSliceCandidateDistBelow = dist;
+                            nearestSliceCandidateBelow = sliceCandidateY;
+                        }
+                    }
+                }
+
+                foreach (Transform tile in _tilesParent.transform)
+                {
+                    if (nearestSliceCandidateAbove != null && tile.localPosition.y >= nearestSliceCandidateAbove
+                     || nearestSliceCandidateBelow != null && tile.localPosition.y <= nearestSliceCandidateBelow)
+                    {
+                        DetachFloe(tile.GetComponent<FloeTile>());
+                    }
+                }
+            }
         }
 
 #if UNITY_EDITOR

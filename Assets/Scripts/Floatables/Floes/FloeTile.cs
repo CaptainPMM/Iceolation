@@ -14,6 +14,7 @@ namespace LD54.Floatables.Floes
 
         [Header("State")]
         [SerializeField] private bool _isFloating;
+        [SerializeField] private bool _wasDetached;
 
         public bool IsFloating
         {
@@ -34,6 +35,31 @@ namespace LD54.Floatables.Floes
                 }
             }
         }
+
+
+        public bool WasDetached
+        {
+            get => _wasDetached;
+            set
+            {
+                _wasDetached = value;
+                // if (value)
+                // {
+                //     if (_resetWasAttachedRoutine != null) StopCoroutine(_resetWasAttachedRoutine);
+                //     _resetWasAttachedRoutine = StartCoroutine(ResetWasAttached());
+                // }
+
+                // IEnumerator ResetWasAttached()
+                // {
+                //     // Wait minimum for PlayerFloe geo update
+                //     yield return new WaitForFixedUpdate();
+                //     yield return new WaitForFixedUpdate();
+                //     _wasDetached = false;
+                // }
+            }
+        }
+
+        // Coroutine _resetWasAttachedRoutine;
 
         private void Update()
         {

@@ -317,6 +317,9 @@ MonoBehaviour:
   _steeringAxisX: {fileID: 6901104213111217571}
   _steeringAxisY: {fileID: 9044469155359575856}
   _tilesParent: {fileID: 359803411959737272}
+  _playerFloeLayer:
+    serializedVersion: 2
+    m_Bits: 64
   _moveSpeed: {x: 3, y: 3}
   _steeringAxisXDeadzone: 0.2
   _steeringAxisYDeadzone: 0.2
