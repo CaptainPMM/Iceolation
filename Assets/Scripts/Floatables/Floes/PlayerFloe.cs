@@ -174,8 +174,7 @@ namespace LD54.Floatables.Floes
             SnapToGrid(_col.ClosestPoint(iceberg.transform.position), out _, out Vector2 localCoords, iceberg.MoveSpeed);
 
             // Impact
-            float impact = iceberg.Weight * _tilesParent.childCount * GameManager.Instance.ProgressSpeed;
-            DestroyInRadius(localCoords, 2 + Mathf.RoundToInt(impact * _obstacleImpactFactor));
+            DestroyInRadius(localCoords, 1 + iceberg.DestructionTileRadius);
 
             // Geo Update
             StartCoroutine(DelayedGeoUpdate());
@@ -194,7 +193,7 @@ namespace LD54.Floatables.Floes
                 while (time < _bounceDuration)
                 {
                     Vector3 movement = (Vector3)(bounceDir * _moveSpeed * _bounceStrength * Mathf.InverseLerp(_bounceDuration, 0f, time) * Time.deltaTime);
-                    
+
                     if (movement.y >= 0f)
                     {
                         if (_col.bounds.max.y + movement.y > GameManager.Instance.GameViewBounds.y - BorderBoundsOffset) movement.y = 0f;
@@ -203,7 +202,7 @@ namespace LD54.Floatables.Floes
                     {
                         if (_col.bounds.min.y + movement.y < -GameManager.Instance.GameViewBounds.y + BorderBoundsOffset) movement.y = 0f;
                     }
-                    
+
                     transform.position += movement;
                     if (!_player.IsDrowning) _player.transform.position += movement;
 

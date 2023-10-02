@@ -318,8 +318,8 @@ MonoBehaviour:
   _steeringAxisY: {fileID: 9044469155359575856}
   _tilesParent: {fileID: 359803411959737272}
   _moveSpeed: {x: 3, y: 3}
-  _steeringAxisXDeadzone: 0.5
-  _steeringAxisYDeadzone: 0.5
+  _steeringAxisXDeadzone: 0.2
+  _steeringAxisYDeadzone: 0.2
   _obstacleImpactFactor: 0.03
   _bounceDuration: 1
   _bounceStrength: 2

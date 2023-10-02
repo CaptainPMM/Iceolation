@@ -9,6 +9,7 @@ namespace LD54.Floatables.Obstacles
         [field: Header("Settings")]
         [field: SerializeField] public float MoveSpeed { get; private set; } = 1f; // negative values move to the right
 
+        [SerializeField] private byte _destructionTileRadius = 1;
         [SerializeField] private float _weight = 1f;
 
         [Header("State")]
@@ -23,11 +24,12 @@ namespace LD54.Floatables.Obstacles
             }
         }
 
+        public byte DestructionTileRadius => _destructionTileRadius;
         public float Weight => _weight;
 
         private void Update()
         {
-            if(_isFloating)
+            if (_isFloating)
             {
                 transform.position = new Vector3(transform.position.x -
                 (MoveSpeed * Time.deltaTime * GameManager.Instance.ProgressSpeed),
@@ -40,12 +42,12 @@ namespace LD54.Floatables.Obstacles
             }
 
             float speed = MoveSpeed * GameManager.Instance.ProgressSpeed;
-            float waveProbability = (2.5f + Weight*0.5f) * speed * Time.deltaTime;
+            float waveProbability = (2.5f + Weight * 0.5f) * speed * Time.deltaTime;
             if (Random.Range(0.0f, 1.0f) < waveProbability)
             {
                 Vector3 posOffset = new Vector3(Weight * 0.0f, -0.0f, 0.0f);
-                float duration = 1.2f / speed + Weight*1.0f;
-                float size = 4.0f + Weight*4.0f + speed * 0.2f;
+                float duration = 1.2f / speed + Weight * 1.0f;
+                float size = 4.0f + Weight * 4.0f + speed * 0.2f;
                 GameManager.Instance.Ocean.CreateWave(
                     this.transform.position + posOffset, 0.2f, size, duration, 1.0f, Ocean.Ocean.Shape.Trail
                 );
