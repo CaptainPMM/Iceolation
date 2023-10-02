@@ -53,6 +53,7 @@ MonoBehaviour:
   <FloatSpeed>k__BackingField: 1.5
   _floatingScaleFactor: 0.9
   _isFloating: 0
+  _wasDetached: 0
 --- !u!1 &2407564885690273037
 GameObject:
   m_ObjectHideFlags: 0
