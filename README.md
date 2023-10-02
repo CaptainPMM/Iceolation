@@ -1,5 +1,5 @@
-# LD54
-Ludum Dare 54 Game Jam
+# LD54 Game Jam: Iceolation
+This game project was developed for the Ludum Dare 54 Game Jam in 72 hours.
 
 # Contributors
 [Fynn](https://github.com/FynnRieger)  
