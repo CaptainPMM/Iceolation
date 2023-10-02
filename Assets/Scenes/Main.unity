@@ -691,15 +691,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5020636816648404960, guid: 9051801261c5bc4a9ac16d25cd577a16, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.9628546
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5020636816648404960, guid: 9051801261c5bc4a9ac16d25cd577a16, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.14986902
+      value: -0.15
       objectReference: {fileID: 0}
     - target: {fileID: 5020636816648404960, guid: 9051801261c5bc4a9ac16d25cd577a16, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -9.964298
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5020636816648404960, guid: 9051801261c5bc4a9ac16d25cd577a16, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1049,9 +1049,9 @@ SceneRoots:
   - {fileID: 1354944780}
   - {fileID: 1070092051635756918}
   - {fileID: 8513426741967811553}
+  - {fileID: 7552703232636982717}
   - {fileID: 7676484727734092198}
   - {fileID: 256419189}
   - {fileID: 1657077418}
   - {fileID: 736151250}
   - {fileID: 7616476059637265443}
-  - {fileID: 7552703232636982717}
