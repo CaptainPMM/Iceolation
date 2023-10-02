@@ -21,6 +21,7 @@ namespace LD54.Game
         [field: SerializeField] public Ocean.Ocean Ocean { get; private set; }
 
         [field: SerializeField] public float ProgressSpeed = 1f;
+        public float ProgressSpeedChangePerMinute = 2.0f;
 
         public bool IsRunning { get; private set; } = false;
 
@@ -41,8 +42,8 @@ namespace LD54.Game
 
             while (IsRunning)
             {
-                yield return new WaitForSeconds(15f);
-                ProgressSpeed += 0.1f;
+                yield return new WaitForSeconds(6f);
+                ProgressSpeed += 0.1f*ProgressSpeedChangePerMinute;
             }
         }
 
