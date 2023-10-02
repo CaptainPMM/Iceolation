@@ -46,7 +46,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BorderUpperOffset: -1
   BorderLowerOffset: -0.5
-  BorderObjectPrefab: {fileID: 8196508433031764401, guid: 31befe9f4c3410440bab77f880af5fa1, type: 3}
+  BorderObjectPrefab: {fileID: 8196508433031764401, guid: a0c3c2e486824444c8e446557b216c10, type: 3}
+  BordersContainer: {fileID: 0}
   BorderObjectFrequency: 0.4
   spawnElements:
   - weight: 0.25
