@@ -49,6 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Type>k__BackingField: 2
   _col: {fileID: 5622630592268097125}
+  _botSprite: {fileID: 6622483716920823337}
   <FloatSpeed>k__BackingField: 1
   _floatingScaleFactor: 0.9
   _isFloating: 0
