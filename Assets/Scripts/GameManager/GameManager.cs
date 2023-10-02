@@ -22,6 +22,7 @@ namespace LD54.Game
 
         [field: SerializeField] public float ProgressSpeed = 1f;
         public float ProgressSpeedChangePerMinute = 2.0f;
+        public float ProgressSpeedLimit = 6.0f;
 
         public bool IsRunning { get; private set; } = false;
 
@@ -44,6 +45,7 @@ namespace LD54.Game
             {
                 yield return new WaitForSeconds(6f);
                 ProgressSpeed += 0.1f*ProgressSpeedChangePerMinute;
+                ProgressSpeed = Mathf.Min(ProgressSpeed, ProgressSpeedLimit);
             }
         }
 
